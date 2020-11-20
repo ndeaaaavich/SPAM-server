@@ -21,6 +21,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
 	private int movimientoElegido;
+	private boolean mover;
 	private int idMensaje = 0;
 	//private Sprite sprExclamation = new Sprite( new Texture("personajes/exclamacion-removebg-preview.png") );
 
@@ -121,6 +122,10 @@ public class NPC extends Entidad implements InterfaceRobable{
 				this.enviarFuerzaY(1);
 			}
 		}
+		
+		if (mover) {
+			Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + this.cuerpo.getPosition().x + "%" + this.cuerpo.getPosition().y);
+		}
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------ANIMACION----------------------------------------------------------------
@@ -196,27 +201,33 @@ public class NPC extends Entidad implements InterfaceRobable{
 	}
 	public void setPosicion(float x, float y) {
     	this.cuerpo.setPosition(x,y);
+    	
 	}
 	public void setCambioDirec(boolean parar) {
 		this.CambioDirec = parar;
 		tiempo = 0;
 	}
-	public void enviarFuerzaX(float posNeg) {
-		if(fuerzaX*posNeg!=fuerzaX){
-			fuerzaX *= posNeg;
+	public void enviarFuerzaX(float fuerzaNueva) {
+		
+		
+		if(fuerzaNueva!=fuerzaX){
+			fuerzaX = fuerzaNueva;
 			fuerzaY = 0;
 
 			this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
-			Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "x%" + identificador + "%" + fuerzaX + "%" + idMensaje);
+			
+			if(fuerzaNueva!=0) mover = true;
+			else mover = false;
+			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "x%" + identificador + "%" + fuerzaX + "%" + idMensaje);
 		}
 	}
-	public void enviarFuerzaY(float posNeg) {
-		if(fuerzaY*posNeg!=fuerzaY){
-			fuerzaY *= posNeg;
+	public void enviarFuerzaY(float fuerzaNueva) {
+		if(fuerzaNueva!=fuerzaY){
+			fuerzaY = fuerzaNueva;
 			fuerzaX = 0;
 
 			this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
-			Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "y%" + identificador + "%" + fuerzaY);
+			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "y%" + identificador + "%" + fuerzaY);
 		}
 	}
 }
