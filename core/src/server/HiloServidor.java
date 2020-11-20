@@ -1,22 +1,19 @@
 package server;
 
 import java.io.IOException;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
 import eventos.InterfaceRobable;
 import utiles.Global;
 import utiles.Utiles;
-import main.Principal;
 import pantallas.*;
-import personajes.Jugador;
-import personajes.Ladron;
 import personajes.NPC;
 
 public class HiloServidor extends Thread {
