@@ -79,8 +79,9 @@ public class NPC extends Entidad implements InterfaceRobable{
 		random = Utiles.r.nextInt(700)+1;
 		//si este random se sacaba todo el tiempo siempre salía un numero distinto
 		//asi que lo guarde en una variable distitna que se llama movimientoElegido
-		
+		//hola
 		if((random < 5) && (tiempo==0.0f)) {
+			randomDirec = Utiles.r.nextInt(2);
 			movimientoElegido = random;
 			tiempoMov = (Utiles.r.nextFloat() * 0.20f)+0.2f;
 			Utiles.hs.enviarMensajeATodos("npcs%" + "tiempoMov%" + identificador + "%" + tiempoMov);//0-1-2-3	
@@ -215,7 +216,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 		}
 	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
-		randomDirec = Utiles.r.nextInt(2);
 		
 		if(fuerzaNuevaX != fuerzaX){
 			if(randomDirec==0)fuerzaX = fuerzaNuevaX;
