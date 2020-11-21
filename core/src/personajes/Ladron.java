@@ -14,7 +14,7 @@ public class Ladron extends Jugador{
 	public Ladron(Cuerpo cuerpo, String sprite, int[] apariencia) {
 		super(cuerpo, sprite);
 		this.apariencia = apariencia;
-       // cuerpo.setUserData(this);
+        cuerpo.setUserData(this);
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SCENE 2D-----------------------------------------------------------------

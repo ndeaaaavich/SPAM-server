@@ -10,7 +10,7 @@ public class Guardia extends Jugador {
 	
 	public Guardia(Cuerpo cuerpo, String sprite) {
 		super(cuerpo, sprite);
-       //cuerpo.setUserData(this);
+		cuerpo.setUserData(this);
 	}
 	
 	//--------------------------------------------------------------------------------------------------------------------------------------

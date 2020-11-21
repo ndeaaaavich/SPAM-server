@@ -18,7 +18,7 @@ public abstract class Jugador extends Entidad{
 	
 	public Jugador(Cuerpo cuerpo, String sprite) {
 		super(cuerpo, sprite);
-        cuerpo.setUserData(this);
+        //cuerpo.setUserData(this);
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SCENE 2D-----------------------------------------------------------------

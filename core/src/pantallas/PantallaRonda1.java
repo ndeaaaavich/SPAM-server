@@ -81,14 +81,14 @@ public class PantallaRonda1 extends PantallaRonda{
 								
 								if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
 									
-									System.out.println("aaaaaaaaaaaa");
+									System.out.println("if user data");
 									
 									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
 															Utiles.hs.getClientes()[0].getIp(), 
 															Utiles.hs.getClientes()[0].getPuerto());
 								}else {
 									
-									System.out.println("bbbbbbbbbb");
+									System.out.println("else user data");
 									
 									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
 											Utiles.hs.getClientes()[1].getIp(), 
@@ -103,9 +103,9 @@ public class PantallaRonda1 extends PantallaRonda{
 							
 							((Jugador) o1).cambiarSala = true;
 							
-							if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+							if(((Jugador) o2).getCuerpo().getUserData().equals("Guardia")) {
 								
-								System.out.println("aaaaaaaaaaaa");
+								System.out.println("if user data sala");
 								
 								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
 														Utiles.hs.getClientes()[0].getIp(), 
@@ -115,7 +115,7 @@ public class PantallaRonda1 extends PantallaRonda{
 														Utiles.hs.getClientes()[0].getPuerto());
 							}else {
 								
-								System.out.println("bbbbbbbbbb");
+								System.out.println("else user data sala ");
 								
 								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
 														Utiles.hs.getClientes()[1].getIp(), 
@@ -140,51 +140,62 @@ public class PantallaRonda1 extends PantallaRonda{
 					if (o1 instanceof Cuerpo) {// contactos zonas
 						if (o2 instanceof Jugador) {// comprueba si el objeto que choca es el ladron
 							
-							System.out.println("bnigfngue");
+							System.out.println("if cuerpo jugador");
 							
 							if (((Jugador) o2).getSala() != -1) {
 								
+								System.out.println("if getSala");
+								
 								((Jugador) o2).salaAnterior = ((Jugador) o2).getSala();
 								
-								if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+								System.out.println(((Jugador) o2).getCuerpo().getUserData());
+								System.out.println(((Jugador) o2).getCuerpo().getUserData().equals("Guardia"));
+								if( ((Jugador) o2).getCuerpo().getUserData().equals("Guardia")) {
 									
-									System.out.println("aaaaaaaaaaaa");
-									
-									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+									System.out.println("if user data");
+									/*
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o2).getSala(), 
 															Utiles.hs.getClientes()[0].getIp(), 
-															Utiles.hs.getClientes()[0].getPuerto());
+															Utiles.hs.getClientes()[0].getPuerto());*/
 								}else {
 									
-									System.out.println("bbbbbbbbbb");
-									
-									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+									System.out.println("else user data");
+									/*
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o2).getSala(), 
 											Utiles.hs.getClientes()[1].getIp(), 
-											Utiles.hs.getClientes()[1].getPuerto());	
+											Utiles.hs.getClientes()[1].getPuerto());	*/
 								}
 							}
 
-							System.out.println( "aaaaaaaaaaa" + ((Cuerpo) o1).getZona());
+							System.out.println( "numero de zona " + ((Cuerpo) o1).getZona());
 							
 							((Jugador) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del ladron a la sala
 																			// en la que está
 
 							((Jugador) o2).cambiarSala = true;
 							
-							if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+							if(((Jugador) o2).getCuerpo().getUserData().equals("Guardia")) {
+								
+								System.out.println("if user data sala");
+								/*
 								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
 														Utiles.hs.getClientes()[0].getIp(), 
 														Utiles.hs.getClientes()[0].getPuerto());
 								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
 														Utiles.hs.getClientes()[0].getIp(), 
-														Utiles.hs.getClientes()[0].getPuerto());
+														Utiles.hs.getClientes()[0].getPuerto());*/
 							}else {
+
+								System.out.println("else user data sala");
+								/*
 								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
 														Utiles.hs.getClientes()[1].getIp(), 
 														Utiles.hs.getClientes()[1].getPuerto());	
 								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
 														Utiles.hs.getClientes()[1].getIp(), 
-														Utiles.hs.getClientes()[1].getPuerto());	
+														Utiles.hs.getClientes()[1].getPuerto());	*/
 							}
+							System.out.println("\n");
 						}
 						if (o2 instanceof NPC) {// comprueba si el objeto que choca es el NPC
 
@@ -210,6 +221,7 @@ public class PantallaRonda1 extends PantallaRonda{
 						}
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 			@Override
