@@ -3,7 +3,6 @@ package personajes;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
-import utiles.Global;
 import utiles.Utiles;
 
 import cuerpos.Cuerpo;
@@ -15,6 +14,7 @@ public class Ladron extends Jugador{
 	public Ladron(Cuerpo cuerpo, String sprite, int[] apariencia) {
 		super(cuerpo, sprite);
 		this.apariencia = apariencia;
+       // cuerpo.setUserData(this);
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SCENE 2D-----------------------------------------------------------------

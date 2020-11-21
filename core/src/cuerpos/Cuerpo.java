@@ -85,4 +85,7 @@ public class Cuerpo{
 	public Vector2 getLinearVelocity() {
 		return bodyReferencia.getLinearVelocity();
 	}
+	public Object getUserData() {
+		return bodyReferencia.getUserData();
+	}
 }

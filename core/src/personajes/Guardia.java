@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import cuerpos.Cuerpo;
-import utiles.Global;
 import utiles.Utiles;
 
 public class Guardia extends Jugador {
 	
 	public Guardia(Cuerpo cuerpo, String sprite) {
 		super(cuerpo, sprite);
+       //cuerpo.setUserData(this);
 	}
 	
 	//--------------------------------------------------------------------------------------------------------------------------------------

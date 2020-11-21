@@ -21,6 +21,7 @@ public class HiloServidor extends Thread {
 	private DatagramSocket conexion;
 	private boolean fin = false;
 	private DireccionRed[] clientes = new DireccionRed[2];
+
 	private int cantClientes = 0;
 
 	private PantallaRonda app;
@@ -34,7 +35,9 @@ public class HiloServidor extends Thread {
 	public float getFuerzaY() {
 		return fuerzaY;
 	}
-
+	public DireccionRed[] getClientes() {
+		return clientes;
+	}
 	public void setApp(PantallaRonda app) {
 		this.app = app;
 	}

@@ -3,35 +3,22 @@ package pantallas;
 import com.badlogic.gdx.Gdx;
 
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import server.HiloServidor;
 import utiles.Global;
 import utiles.Render;
 import utiles.Utiles;
 
 import cuerpos.Cuerpo;
-import personajes.SpriteInfo;
-import mapas.Mapa;
-import personajes.Guardia;
-import personajes.Jugador;
-import personajes.Ladron;
-import personajes.NPC;
+import personajes.*;
 
 public class PantallaRonda1 extends PantallaRonda{
 
@@ -59,23 +46,6 @@ public class PantallaRonda1 extends PantallaRonda{
 	
 	@Override
 	public void show() {
-
-		int WScreen = Gdx.graphics.getWidth();
-		int HScreen = Gdx.graphics.getHeight();
-
-		//camara
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, (WScreen * Utiles.PPM) / 2, (HScreen * Utiles.PPM) / 2);
-		//mundo
-		mundo = new World(new Vector2(0, 0), true);
-		
-		viewport = new FitViewport((WScreen * Utiles.PPM) / 2, (HScreen * Utiles.PPM) / 2, camera);
-		stage = new Stage(viewport);
-		//TiledMap
-		tileMap = new TmxMapLoader().load("mapas/escenario.tmx");
-		b2dr = new Box2DDebugRenderer();
-		tmr = new OrthogonalTiledMapRenderer(tileMap, 1 * Utiles.PPM);
-		mapa = new Mapa(tileMap, mundo);
 		//b2dr.setDrawBodies(false);
 		
 		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, 200, 160), "personajes/badlogic.jpg");
@@ -84,84 +54,163 @@ public class PantallaRonda1 extends PantallaRonda{
 		Utiles.hs = new HiloServidor(this);
 		Utiles.hs.start();
 		//sprites
-		
-
-				
+	
 		sprRobo = new Sprite(new Texture("personajes/badlogic.jpg") );
 		//eventos
 
 		stage.setKeyboardFocus(jugadorGuardia);
 		
+		// eventos
 		mundo.setContactListener(new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
 				Object o1 = contact.getFixtureA().getBody().getUserData();
 				Object o2 = contact.getFixtureB().getBody().getUserData();
-				//HAY QUE HACER TODAS LAS COMPROBACIONES 2 VECES UNA CON o1 Y OTRA CON o2
+				// HAY QUE HACER TODAS LAS COMPROBACIONES 2 VECES UNA CON o1 Y OTRA CON o2
 				try {
-					if(o2 instanceof Cuerpo){//contactos zonas 
-						if(o1 instanceof Jugador){//comprueba si el objeto que choca es el ladron
+					if (o2 instanceof Cuerpo) {// contactos zonas
+						if (o1 instanceof Jugador) {// comprueba si el objeto que choca es el jugador
 							
-							if( ((Jugador) o1).getSala() != -1 ) {
+							System.out.println("bnigfngue");
+							
+							if (((Jugador) o1).getSala() != -1) {
+								
+								System.out.println("hhhhhhhhhh");
+								
 								((Jugador) o1).salaAnterior = ((Jugador) o1).getSala();
+								
+								if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+									
+									System.out.println("aaaaaaaaaaaa");
+									
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+															Utiles.hs.getClientes()[0].getIp(), 
+															Utiles.hs.getClientes()[0].getPuerto());
+								}else {
+									
+									System.out.println("bbbbbbbbbb");
+									
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+											Utiles.hs.getClientes()[1].getIp(), 
+											Utiles.hs.getClientes()[1].getPuerto());	
+								}
 							}
 							
-							((Jugador) o1).setSala( ((Cuerpo) o2).getZona() );//cambia la sala del ladron a la sala
-																		     //en la que está
+							System.out.println( "Aaaaaaaaaaaaaaa" + ((Cuerpo) o2).getZona());
+							
+							((Jugador) o1).setSala(((Cuerpo) o2).getZona());// cambia la sala del ladron a la sala
+																			// en la que está
 							
 							((Jugador) o1).cambiarSala = true;
 							
+							if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+								
+								System.out.println("aaaaaaaaaaaa");
+								
+								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
+														Utiles.hs.getClientes()[0].getIp(), 
+														Utiles.hs.getClientes()[0].getPuerto());
+								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
+														Utiles.hs.getClientes()[0].getIp(), 
+														Utiles.hs.getClientes()[0].getPuerto());
+							}else {
+								
+								System.out.println("bbbbbbbbbb");
+								
+								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
+														Utiles.hs.getClientes()[1].getIp(), 
+														Utiles.hs.getClientes()[1].getPuerto());	
+								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
+														Utiles.hs.getClientes()[1].getIp(), 
+														Utiles.hs.getClientes()[1].getPuerto());	
+							}
 						}
-						if(o1 instanceof NPC){//comprueba si el objeto que choca es el NPC
-							((NPC) o1).setSala( ((Cuerpo) o2).getZona() );//cambia la sala del NPC a la sala
-							   											//en la que está
-							if( ((Cuerpo) o2).isRobado() ) {//si en la sala ya se realizó un robo el atributo
-															//robado del cuerpo que representa a la sala será true
+						if (o1 instanceof NPC) {// comprueba si el objeto que choca es el NPC
+							((NPC) o1).setSala(((Cuerpo) o2).getZona());// cambia la sala del NPC a la sala
+																		// en la que está
+							if (((Cuerpo) o2).isRobado()) {// si en la sala ya se realizó un robo el atributo
+															// robado del cuerpo que representa a la sala será true
 
-								((NPC) o1).setRobado(true); //no se podrá robar en esta sala asi que se pone el 
-															//atributo robado del NPC en true
+								((NPC) o1).setRobado(true); // no se podrá robar en esta sala asi que se pone el
+															// atributo robado del NPC en true
 							}
 						}
 					}
-					
-					if(o1 instanceof Cuerpo){//contactos zonas 
-						if(o2 instanceof Jugador){//comprueba si el objeto que choca es el ladron
+
+					if (o1 instanceof Cuerpo) {// contactos zonas
+						if (o2 instanceof Jugador) {// comprueba si el objeto que choca es el ladron
 							
-							if( ((Jugador) o2).getSala() != -1 ) {
+							System.out.println("bnigfngue");
+							
+							if (((Jugador) o2).getSala() != -1) {
+								
 								((Jugador) o2).salaAnterior = ((Jugador) o2).getSala();
+								
+								if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+									
+									System.out.println("aaaaaaaaaaaa");
+									
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+															Utiles.hs.getClientes()[0].getIp(), 
+															Utiles.hs.getClientes()[0].getPuerto());
+								}else {
+									
+									System.out.println("bbbbbbbbbb");
+									
+									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
+											Utiles.hs.getClientes()[1].getIp(), 
+											Utiles.hs.getClientes()[1].getPuerto());	
+								}
 							}
+
+							System.out.println( "aaaaaaaaaaa" + ((Cuerpo) o1).getZona());
 							
-							((Jugador) o2).setSala( ((Cuerpo) o1).getZona() );//cambia la sala del ladron a la sala
-																		     //en la que está
-							
+							((Jugador) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del ladron a la sala
+																			// en la que está
+
 							((Jugador) o2).cambiarSala = true;
 							
+							if(((Jugador) o1).getCuerpo().getUserData().equals("Guardia")) {
+								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
+														Utiles.hs.getClientes()[0].getIp(), 
+														Utiles.hs.getClientes()[0].getPuerto());
+								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
+														Utiles.hs.getClientes()[0].getIp(), 
+														Utiles.hs.getClientes()[0].getPuerto());
+							}else {
+								Utiles.hs.enviarMensaje("sala%" + ((Jugador) o1).getSala(), 
+														Utiles.hs.getClientes()[1].getIp(), 
+														Utiles.hs.getClientes()[1].getPuerto());	
+								Utiles.hs.enviarMensaje("cambiarSala%" + true, 
+														Utiles.hs.getClientes()[1].getIp(), 
+														Utiles.hs.getClientes()[1].getPuerto());	
+							}
 						}
-						if(o2 instanceof NPC){//comprueba si el objeto que choca es el NPC
-							
-							((NPC) o2).setSala( ((Cuerpo) o1).getZona() );//cambia la sala del NPC a la sala
-							   											//en la que está
-							if( ((Cuerpo) o1).isRobado() ) {//si en la sala ya se realizó un robo el atributo
-															//robado del cuerpo que representa a la sala será true
+						if (o2 instanceof NPC) {// comprueba si el objeto que choca es el NPC
 
-								((NPC) o2).setRobado(true); //no se podrá robar en esta sala asi que se pone el 
-															//atributo robado del NPC en true
+							((NPC) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del NPC a la sala
+																		// en la que está
+							if (((Cuerpo) o1).isRobado()) {// si en la sala ya se realizó un robo el atributo
+															// robado del cuerpo que representa a la sala será true
+
+								((NPC) o2).setRobado(true); // no se podrá robar en esta sala asi que se pone el
+															// atributo robado del NPC en true
 							}
 						}
 					}
 
-					
-					if(o2 == null || o2 instanceof NPC) {
-						if(o1 instanceof NPC){
+					if (o2 == null || o2 instanceof NPC) {
+						if (o1 instanceof NPC) {
 							((NPC) o1).setCambioDirec(true);
 						}
 					}
-					if(o1 == null || o1 instanceof NPC) {
-						if(o2 instanceof NPC){
+					if (o1 == null || o1 instanceof NPC) {
+						if (o2 instanceof NPC) {
 							((NPC) o2).setCambioDirec(true);
 						}
 					}
-				}catch(Exception e) {}
+				} catch (Exception e) {
+				}
 			}
 			@Override
 			public void endContact(Contact contact) {
@@ -177,45 +226,30 @@ public class PantallaRonda1 extends PantallaRonda{
 
 	@Override
 	public void render(float delta) {
+		//System.out.println(jugadorGuardia.getCuerpo().getUserData());
 		Render.limpiarPantalla();
 		if(Global.empiezaJuego) {
 
-			update(delta);
-			
-			cont ++;
-			if(cont>8) {
-				//Utiles.principal.setScreen(new PantallaRonda2(new Vector2(0,-9.8f), "mapas/ronda2.tmx"));
+			if (Global.ronda == 1) {
+				update(delta);
+				tmr.setView(camera);
+				tmr.render();
+				b2dr.render(mundo, camera.combined);
+				stage.act();
+				stage.draw();
+
+				//System.out.println(jugadorLadron.getSala());
+				Render.batch.setProjectionMatrix(camera.combined);
+				Gdx.input.setInputProcessor(stage);
+			}else {
+				Utiles.principal.setScreen(new PantallaRonda2(new Vector2(0, -9.8f), "mapas/ronda2.tmx"));
 			}
-			
-			tmr.setView(camera);
-			tmr.render();
-			b2dr.render(mundo, camera.combined);
-			stage.act();
-			stage.draw();
-			
-			adelantarCuerpos();
-			
-			//Render.batch.begin();
-			//test.draw(Render.batch);
-			//Render.batch.end();
-			
-			Render.batch.setProjectionMatrix(camera.combined);
-			Gdx.input.setInputProcessor(stage);
 		}
 	}
 	
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height);
-	}
-	@Override
-	public void pause() {
-	}
-	@Override
-	public void resume() {
-	}
-	@Override
-	public void hide() {
 	}
 	@Override
 	public void dispose() {
@@ -255,31 +289,6 @@ public class PantallaRonda1 extends PantallaRonda{
 		camera.position.set(posicion,0);
 			
 		camera.update();
-	}
-	private void adelantarCuerpos() {
-		for (int i = 0; i < npcs.length; i++) {
-			if(jugadorGuardia.getPosition().dst(npcs[i].getPosition()) < 30 * Utiles.PPM) {
-				if(jugadorGuardia.getPosition().y > npcs[i].getPosition().y ) {
-					jugadorGuardia.toBack();
-				}else {	
-					jugadorGuardia.toFront();
-				}
-			}
-			if(jugadorLadron.getPosition().dst(npcs[i].getPosition()) < 30 * Utiles.PPM) {
-				if(jugadorLadron.getPosition().y > npcs[i].getPosition().y ) {
-					jugadorLadron.toBack();
-				}else {	
-					jugadorLadron.toFront();
-				}
-			}
-		}
-		if(jugadorLadron.getPosition().dst(jugadorGuardia.getPosition()) < 30 * Utiles.PPM) {
-			if(jugadorLadron.getPosition().y > jugadorGuardia.getPosition().y ) {
-				jugadorLadron.toBack();
-			}else {	
-				jugadorLadron.toFront();
-			}
-		}
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------NPC COSAS----------------------------------------------------------------
