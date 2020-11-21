@@ -18,6 +18,7 @@ import eventos.InterfaceRobable;
 
 public class NPC extends Entidad implements InterfaceRobable{
 	private int random = 0; // 1 arriba 2 abajo 3 izquierda 4 derecha 5-40 nada
+	private int randomDirec;
 	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
 	private int movimientoElegido;
@@ -89,9 +90,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 			tiempoMov=0;
 			tiempo=0;
 
-			this.cuerpo.setLinearVelocity(0,0);
-			this.enviarFuerzaX(0);
-			this.enviarFuerzaY(0);
+			this.enviarFuerzas(0,0);
 		}
 		if((tiempo < tiempoMov) || ((movimientoElegido < 5) && (tiempo==0.0f))) {
 			//tiempoMov antes estaba aca
@@ -106,20 +105,16 @@ public class NPC extends Entidad implements InterfaceRobable{
 			if(Global.empiezaJuego) {
 				tiempo = 0;
 
-				this.cuerpo.setLinearVelocity(0,0);
-				this.enviarFuerzaX(0);
-				this.enviarFuerzaY(0);
+				this.enviarFuerzas(0,0);
 			}
 		}
 		
 		animacionMovimiento();
 		if(Global.empiezaJuego) {
 			if(finRecorrido) {
-				this.enviarFuerzaX(-1f);
-				this.enviarFuerzaY(-1f);
+				this.enviarFuerzas(-1,-1);
 			}else {
-				this.enviarFuerzaX(1);
-				this.enviarFuerzaY(1);
+				this.enviarFuerzas(1,1);
 			}
 		}
 		
@@ -219,16 +214,20 @@ public class NPC extends Entidad implements InterfaceRobable{
 			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "x%" + identificador + "%" + fuerzaX + "%" + idMensaje);
 		}
 	}
-	public void enviarFuerzaY(float fuerzaNueva) {
-		if(fuerzaNueva!=fuerzaY){
-			fuerzaY = fuerzaNueva;
-			fuerzaX = 0;
-
-			this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
-			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "y%" + identificador + "%" + fuerzaY);
+	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
+		randomDirec = Utiles.r.nextInt(2);
 		
-			if(fuerzaNueva!=0) mover = true;
-			else mover = false;
+		if(fuerzaNuevaX != fuerzaX){
+			if(randomDirec==0)fuerzaX = fuerzaNuevaX;
 		}
+		
+		if(fuerzaNuevaY != fuerzaY){
+			if(randomDirec==1)fuerzaY = fuerzaNuevaY;
+		}
+		
+		if(fuerzaNuevaX !=0 && fuerzaNuevaY !=0) mover = true;
+		else mover = false;
+		
+		this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
 	}
 }
