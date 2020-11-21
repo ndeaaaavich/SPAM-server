@@ -382,7 +382,7 @@ public class PantallaRonda1 extends PantallaRonda{
 			}
 			
 			else npcs[i].setPosicion(posX,posY);
-
+			
 			if (ladronCreado&&jugadorLadron.getPosition().equals(new Vector2(0,0))){
 				jugadorLadron.setPosition(200*Utiles.PPM, 160*Utiles.PPM);
 				System.out.println("setposition del ladron x:");
