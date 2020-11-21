@@ -21,6 +21,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 	private int randomDirec;
 	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
+	private float posX,posY;
 	private int movimientoElegido;
 	private boolean mover;
 	private int idMensaje = 0;
@@ -120,7 +121,9 @@ public class NPC extends Entidad implements InterfaceRobable{
 		}
 		
 		if (mover) {
-			Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + this.cuerpo.getPosition().x + "%" + this.cuerpo.getPosition().y);
+			posX=cuerpo.getPosition().x-(cuerpo.getAncho()/2);
+			posY=cuerpo.getPosition().y-(cuerpo.getAlto()/2);
+			Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + posX + "%" + posY);
 		}
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
@@ -197,7 +200,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 	}//hola
 	public void setPosicion(float x, float y) {
     	this.cuerpo.setPosition(x,y);
-    	
 	}
 	public void setCambioDirec(boolean parar) {
 		this.CambioDirec = parar;
