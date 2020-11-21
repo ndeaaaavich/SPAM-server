@@ -149,7 +149,7 @@ public class PantallaRonda1 extends PantallaRonda{
 								((Jugador) o2).salaAnterior = ((Jugador) o2).getSala();
 								
 								System.out.println(((Jugador) o2).getCuerpo().getUserData());
-								System.out.println(((Jugador) o2).getCuerpo().getUserData().equals("Guardia"));
+
 								if( ((Jugador) o2).getCuerpo().getUserData().equals("Guardia")) {
 									
 									System.out.println("if user data");
