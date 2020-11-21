@@ -48,7 +48,7 @@ public class PantallaRonda1 extends PantallaRonda{
 	public void show() {
 		//b2dr.setDrawBodies(false);
 		
-		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, 200, 160), "personajes/badlogic.jpg");
+		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, 200*Utiles.PPM, 160*Utiles.PPM), "personajes/badlogic.jpg");
 		stage.addActor(jugadorGuardia);
 		//hilo server
 		Utiles.hs = new HiloServidor(this);
@@ -374,16 +374,19 @@ public class PantallaRonda1 extends PantallaRonda{
 			if(i>=indiceLadron && ladronCreado) subindice--;
 			
 			if(i==indiceLadron && !ladronCreado){
-				jugadorLadron.getCuerpo().setPosition(posX, posY);
 				jugadorLadron.setPosition(posX, posY);
 				ladronCreado = true;
 				i--;
 				posXLadron = posX;
 				posYLadron = posY;
-				System.out.println("setposition del ladron x:" + posX + posY);
 			}
 			
-			else npcs[i].setPosicion(posX,posY);	
+			else npcs[i].setPosicion(posX,posY);
+
+			if (ladronCreado&&jugadorLadron.getPosition().equals(new Vector2(0,0))){
+				jugadorLadron.setPosition(200*Utiles.PPM, 160*Utiles.PPM);
+				System.out.println("setposition del ladron x:");
+			}
 		}
 	}
 	public void crearLadron(int indiceLadron) {
