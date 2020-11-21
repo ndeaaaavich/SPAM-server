@@ -208,8 +208,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 		tiempo = 0;
 	}
 	public void enviarFuerzaX(float fuerzaNueva) {
-		
-		
 		if(fuerzaNueva!=fuerzaX){
 			fuerzaX = fuerzaNueva;
 			fuerzaY = 0;
@@ -228,6 +226,9 @@ public class NPC extends Entidad implements InterfaceRobable{
 
 			this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
 			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "y%" + identificador + "%" + fuerzaY);
+		
+			if(fuerzaNueva!=0) mover = true;
+			else mover = false;
 		}
 	}
 }
