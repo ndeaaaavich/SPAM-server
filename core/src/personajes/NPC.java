@@ -85,8 +85,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 			randomDirec = Utiles.r.nextInt(2);
 			movimientoElegido = random;
 			tiempoMov = (Utiles.r.nextFloat() * 0.20f)+0.2f;
-			Utiles.hs.enviarMensajeATodos("npcs%" + "tiempoMov%" + identificador + "%" + tiempoMov);//0-1-2-3	
-
+			
 		}else if((random > 5) && (tiempo==0.0f) ) {
 			movimientoElegido = 10;
 			tiempoMov=0;

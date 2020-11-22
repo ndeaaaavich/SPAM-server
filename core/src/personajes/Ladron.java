@@ -23,9 +23,9 @@ public class Ladron extends Jugador{
 		super.draw(batch, parentAlpha);
 	}
 	public void act(float delta){
-		//Utiles.hs.enviarMensajeATodos("actualizar%x%" + cuerpo.getPosition().x + "%L");
-		//Utiles.hs.enviarMensajeATodos("actualizar%y%" + cuerpo.getPosition().y + "%L");
-		Utiles.hs.enviarMensajeATodos("actualizar%" + cuerpo.getPosition().x + "%" + cuerpo.getPosition().y + "%L");
+		Utiles.hs.enviarMensajeATodos("actualizar%" + (cuerpo.getPosition().x - (cuerpo.getAncho()/2))
+											  + "%" + (cuerpo.getPosition().y - (cuerpo.getAlto()/2))
+											  + "%L");
 	}
 	public void setDireccion(Vector2 xy) {
 		super.setDireccion(xy);

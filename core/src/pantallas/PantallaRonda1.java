@@ -25,7 +25,6 @@ public class PantallaRonda1 extends PantallaRonda{
 	public NPC[] npcs = new NPC[8];
 	//private boolean cerca = false;
 
-	private Sprite sprRobo;
 	private float posX = 0, posY = 0;
 	private Vector2 posicion = new Vector2(0,0);
 	private Vector2 puntoLlegada;
@@ -54,9 +53,6 @@ public class PantallaRonda1 extends PantallaRonda{
 		//hilo server
 		Utiles.hs = new HiloServidor(this);
 		Utiles.hs.start();
-		//sprites
-	
-		sprRobo = new Sprite(new Texture("personajes/badlogic.jpg") );
 		//eventos
 
 		stage.setKeyboardFocus(jugadorGuardia);
