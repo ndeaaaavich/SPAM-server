@@ -22,8 +22,9 @@ public class Guardia extends Jugador {
 	}
 	@Override
 	public void act(float delta) {
-		Utiles.hs.enviarMensajeATodos("actualizar%x%" + cuerpo.getPosition().x + "%G");
-		Utiles.hs.enviarMensajeATodos("actualizar%y%" + cuerpo.getPosition().y + "%G");
+		//Utiles.hs.enviarMensajeATodos("actualizar%x%" + cuerpo.getPosition().x + "%G");
+		//Utiles.hs.enviarMensajeATodos("actualizar%y%" + cuerpo.getPosition().y + "%G");
+		Utiles.hs.enviarMensajeATodos("actualizar%" + cuerpo.getPosition().x + "%" + cuerpo.getPosition().y + "%G");
 	}
 	public void setDireccion(Vector2 xy) {
 		super.setDireccion(xy);
