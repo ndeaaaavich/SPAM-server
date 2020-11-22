@@ -1,8 +1,6 @@
 package pantallas;
 
 import com.badlogic.gdx.Gdx;
-
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
@@ -16,7 +14,6 @@ import server.HiloServidor;
 import utiles.Global;
 import utiles.Render;
 import utiles.Utiles;
-
 import cuerpos.Cuerpo;
 import personajes.*;
 
