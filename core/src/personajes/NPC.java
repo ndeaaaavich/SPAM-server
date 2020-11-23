@@ -21,12 +21,11 @@ public class NPC extends Entidad implements InterfaceRobable{
 	private int randomDirec;
 	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
-	private float posX,posY;
+	private float posX , posY;
 	private int movimientoElegido;
 	private boolean mover;
 	private int idMensaje = 0;
-	//private Sprite sprExclamation = new Sprite( new Texture("personajes/exclamacion-removebg-preview.png") );
-
+	
 	private int[] apariencia = new int[3]; 
 	//0 pelo 
 	//1 torso
@@ -85,7 +84,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 			randomDirec = Utiles.r.nextInt(2);
 			movimientoElegido = random;
 			tiempoMov = (Utiles.r.nextFloat() * 0.20f)+0.2f;
-			
+
 		}else if((random > 5) && (tiempo==0.0f) ) {
 			movimientoElegido = 10;
 			tiempoMov=0;
@@ -118,66 +117,42 @@ public class NPC extends Entidad implements InterfaceRobable{
 				this.enviarFuerzas(1,1);
 			}
 		}
-		
 		if (mover) {
+			//se le resta la mitad del ancho y la del alto para alinear el centro de los body a la de las texturas
 			posX=cuerpo.getPosition().x-(cuerpo.getAncho()/2);
 			posY=cuerpo.getPosition().y-(cuerpo.getAlto()/2);
 			Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + posX + "%" + posY);
 		}
+		for (int i = 0; i < EstadoMovimiento.values().length; i++) {
+			numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
+		}
+		Utiles.hs.enviarMensajeATodos("npcs%" + "estado%" + identificador + "%" + numEstado);
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------ANIMACION----------------------------------------------------------------
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	//@Override
 	protected TextureRegion animacionMovimiento() {
-		switch (movimientoElegido) {
-		case 1:
-			if(!CambioDirec) {
-				this.fuerzaX = 0;
-				this.fuerzaY = 1;
-			}
-			setDerecha((ultimoIndice==0)?true:false);
-			return null;
-		case 2:
-			if(!CambioDirec) {
-				this.fuerzaX = 0;
-				this.fuerzaY = -1;
-			}
-			setDerecha((ultimoIndice==0)?true:false);
-			return null;
-		case 3:
-			if(!CambioDirec) {
-				this.fuerzaY = 0;
-				this.fuerzaX = -1;
-			}
-			if(finRecorrido) {
-				setDerecha(true);
-				ultimoIndice = 0;
-				return null; 
-			}else {
-				setDerecha(false);
-				ultimoIndice = 1;
-				return null;		
-			}
-		case 4:
-			if(!CambioDirec) {
-				this.fuerzaY = 0;
-				this.fuerzaX = 1;
-			}
-			if(finRecorrido) {
-				setDerecha(false);
-				ultimoIndice = 1;
-				return null;
-			}else {
-				setDerecha(true);
-				ultimoIndice = 0;
-				return null;
-			}
-		default:
-			fuerzaX = 0;
-			fuerzaY = 0;
+		// 1 arriba 2 abajo 3 izquierda 4 derecha >5 nada
+		if(movimientoElegido == 4) {// moverse a la derecha
+			estado = EstadoMovimiento.corriendoDerecha;
+			setDerecha(true);
+			ultimoIndice = 0;
 			return null;
 		}
+		if(movimientoElegido == 3) {// moverse a la izquierda
+			estado = EstadoMovimiento.corriendoIzquierda;
+			setDerecha(false);
+			ultimoIndice = 1;
+			return null;
+		}
+		if(movimientoElegido == 1 || movimientoElegido == 2) {
+			estado = EstadoMovimiento.movimientoY;
+			setDerecha((ultimoIndice==0)?true:false);
+			return null;
+		}
+		estado = EstadoMovimiento.parado;
+		return null;
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------GETTERS------------------------------------------------------------------
@@ -213,7 +188,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 			
 			if(fuerzaNueva!=0) mover = true;
 			else mover = false;
-			//Utiles.hs.enviarMensajeATodos("npcs%" + "fuerza%" + "x%" + identificador + "%" + fuerzaX + "%" + idMensaje);
 		}
 	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {

@@ -26,6 +26,10 @@ public class Ladron extends Jugador{
 		Utiles.hs.enviarMensajeATodos("actualizar%" + (cuerpo.getPosition().x - (cuerpo.getAncho()/2))
 											  + "%" + (cuerpo.getPosition().y - (cuerpo.getAlto()/2))
 											  + "%L");
+		for (int i = 0; i < EstadoMovimiento.values().length; i++) {
+			numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
+		}
+		Utiles.hs.enviarMensajeATodos("actualizar%" + "estado%" + numEstado + "%L");
 	}
 	public void setDireccion(Vector2 xy) {
 		super.setDireccion(xy);
