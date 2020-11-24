@@ -1,14 +1,9 @@
 package personajes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import utiles.Global;
 import utiles.Utiles;
@@ -171,6 +166,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	public void setRobado(boolean robado) {
 		this.robado = robado;
+		Utiles.hs.enviarMensajeATodos("npcs%salaRobada%" + identificador);
 	}//hola
 	public void setPosicion(float x, float y) {
     	this.cuerpo.setPosition(x,y);

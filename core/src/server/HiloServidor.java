@@ -147,10 +147,13 @@ public class HiloServidor extends Thread {
 					
 				} else if (mensajeParametrizado[0].equals("ladron")) {
 					if (mensajeParametrizado[1].equals("robo")) {
+						
+						((PantallaRonda1) app).mapa.getVectorZonas()[Integer.parseInt(mensajeParametrizado[2])].setRobado(true);
+						
 						for (int i = 0; i < Utiles.getListeners().size(); i++) {
 							((InterfaceRobable) Utiles.getListeners().get(i)).salaRobada(Integer.parseInt(mensajeParametrizado[2]));
 						}
-						enviarMensajeATodos("ladron%robo%" + mensajeParametrizado[2]);
+						//enviarMensajeATodos("ladron%robo%" + mensajeParametrizado[2]);
 						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),clientes[0].getPuerto());
 
 					} else if (mensajeParametrizado[1].equals("gano")) {

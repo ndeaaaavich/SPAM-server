@@ -169,7 +169,7 @@ public class PantallaRonda1 extends PantallaRonda{
 
 								((NPC) o2).setRobado(true); // no se podrá robar en esta sala asi que se pone el
 															// atributo robado del NPC en true
-							}
+								}
 						}
 					}
 
