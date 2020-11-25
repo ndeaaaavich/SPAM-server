@@ -22,15 +22,15 @@ public class Plataforma {
 	public void moverPlataforma(float delta) {
 		tiempo += delta;
 		if(!llegada) {
-			fuerzas.x =(puntoSalida.x < puntoLlegada.x)?1 :(puntoSalida.x > puntoLlegada.x)? -1: 0;
-			fuerzas.y =(puntoSalida.y < puntoLlegada.y)?1 :(puntoSalida.y > puntoLlegada.y)? -1: 0;
+			fuerzas.x = (puntoSalida.x < puntoLlegada.x)?1 :(puntoSalida.x > puntoLlegada.x)? -1: 0;
+			fuerzas.y = (puntoSalida.y < puntoLlegada.y)?1 :(puntoSalida.y > puntoLlegada.y)? -1: 0;
 			if(tiempo > duracion) {
 				llegada = true;
 				tiempo = 0;
 			}
 		}else{
-			fuerzas.x =(puntoSalida.x > puntoLlegada.x)?1 :(puntoSalida.x < puntoLlegada.x)? -1: 0;
-			fuerzas.y =(puntoSalida.y > puntoLlegada.y)?1 :(puntoSalida.y < puntoLlegada.y)? -1: 0;
+			fuerzas.x = (puntoSalida.x > puntoLlegada.x)?1 :(puntoSalida.x < puntoLlegada.x)? -1: 0;
+			fuerzas.y = (puntoSalida.y > puntoLlegada.y)?1 :(puntoSalida.y < puntoLlegada.y)? -1: 0;
 			if(tiempo > duracion) {
 				llegada = false;
 				tiempo = 0;
@@ -48,5 +48,11 @@ public class Plataforma {
 	}
 	private void setPuntoSalida(Vector2 puntoSalida) {
 		this.puntoSalida = puntoSalida;
+	}
+	public Vector2 getPosition() {
+		return this.cuerpo.getPosition();
+	}
+	public Vector2 getSize() {
+		return new Vector2(this.cuerpo.getAncho(), this.cuerpo.getAlto());
 	}
 }

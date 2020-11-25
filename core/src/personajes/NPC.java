@@ -175,17 +175,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 		this.CambioDirec = parar;
 		tiempo = 0;
 	}
-	public void enviarFuerzaX(float fuerzaNueva) {
-		if(fuerzaNueva!=fuerzaX){
-			fuerzaX = fuerzaNueva;
-			fuerzaY = 0;
-
-			this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
-			
-			if(fuerzaNueva!=0) mover = true;
-			else mover = false;
-		}
-	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
 		
 		if(fuerzaNuevaX != fuerzaX){

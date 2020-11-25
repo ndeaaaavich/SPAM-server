@@ -201,10 +201,8 @@ public class PantallaRonda1 extends PantallaRonda{
 
 	@Override
 	public void render(float delta) {
-		//System.out.println(jugadorGuardia.getCuerpo().getUserData());
 		Render.limpiarPantalla();
 		if(Global.empiezaJuego) {
-
 			if (Global.ronda == 1) {
 				update(delta);
 				tmr.setView(camera);
@@ -213,7 +211,6 @@ public class PantallaRonda1 extends PantallaRonda{
 				stage.act();
 				stage.draw();
 
-				//System.out.println(jugadorLadron.getSala());
 				Render.batch.setProjectionMatrix(camera.combined);
 				Gdx.input.setInputProcessor(stage);
 			}else {

@@ -26,18 +26,21 @@ public class PantallaRonda2 extends PantallaRonda{
 	private PowerUp[] powerUp;
 	private Plataforma[] plataformaMovil;
 	private float tiempo;
+	public float fuerzaXGuardia, fuerzaYGuardia;
+	public float fuerzaXLadron, fuerzaYLadron;
+	public boolean keyDownGuardia, keyDownLadron;
 	
 	public PantallaRonda2(Vector2 gravedad, String rutaMapa) {
 		super(gravedad, rutaMapa, 2);
 	}
 	@Override
 	public void show() {
-		Utiles.hs.setApp(this);
 		plataformaMovil = new Plataforma[mapa.getPlataformasInicioPosition().length];
 		powerUp = new PowerUp[mapa.getPowerUps().length];
+		Utiles.hs.setApp(this);
 		crearjugadores();
 		crearPlataformas();
-		PlataformaspowerUps();
+		crearPowerUps();
 		
 		mundo.setContactListener(new ContactListener() {
 			@Override
@@ -81,15 +84,12 @@ public class PantallaRonda2 extends PantallaRonda{
 				} catch (Exception e) {
 				}
 			}
-
 			@Override
 			public void endContact(Contact contact) {
 			}
-
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
 			}
-
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
 			}
@@ -98,21 +98,28 @@ public class PantallaRonda2 extends PantallaRonda{
 	@Override
 	public void render(float delta) {
 		Render.limpiarPantalla();
-		
-		mundo.step(1 / 60f, 6, 2);
-		update(delta);
-		
-		tmr.setView(camera);
-		tmr.render();
-		b2dr.render(mundo, camera.combined);
-		
-		stage.act();
-		stage.draw();
-		
-		Render.batch.setProjectionMatrix(camera.combined);
-     	Gdx.input.setInputProcessor(stage);
-		for (int i = 0; i < plataformaMovil.length; i++) {
-			plataformaMovil[i].moverPlataforma(delta);	
+		if(Global.ronda==2) {
+			update(delta);
+			
+			tmr.setView(camera);
+			tmr.render();
+			b2dr.render(mundo, camera.combined);
+			
+			stage.act();
+			stage.draw();
+
+			movimiento();
+			
+			for (int i = 0; i < plataformaMovil.length; i++) {
+				plataformaMovil[i].moverPlataforma(delta);	
+				Utiles.hs.enviarMensajeATodos("plataforma%" + i 
+													  + "%" + (plataformaMovil[i].getPosition().x - (plataformaMovil[i].getSize().x/2))
+													  + "%" + (plataformaMovil[i].getPosition().y - (plataformaMovil[i].getSize().y/2)) );
+			}
+			
+			
+			Render.batch.setProjectionMatrix(camera.combined);
+	     	Gdx.input.setInputProcessor(stage);
 		}
 	}
 
@@ -153,7 +160,7 @@ public class PantallaRonda2 extends PantallaRonda{
 														  mapa.getPlataformasFinalPosition()[i]);
 		}
 	}
-	private void PlataformaspowerUps() {
+	private void crearPowerUps() {
 		for (int i = 0; i < powerUp.length; i++) {
 			for (int j = 0; j < PowerUpsEnum.values().length; j++) {
 				if(mapa.getPowerUps()[i].equals(PowerUpsEnum.values()[j].getNombre())) {
@@ -164,5 +171,12 @@ public class PantallaRonda2 extends PantallaRonda{
 			}
 		}
 	}
-	
+	public void movimiento() {
+		if(keyDownGuardia) {
+			jugadorGuardia.getCuerpo().setLinearVelocity(fuerzaXGuardia, fuerzaYGuardia);
+		}
+		if(keyDownLadron) {
+			jugadorLadron.getCuerpo().setLinearVelocity(fuerzaXLadron, fuerzaYLadron);
+		}
+	}
 }
