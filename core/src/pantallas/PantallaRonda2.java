@@ -55,29 +55,28 @@ public class PantallaRonda2 extends PantallaRonda{
 							((PowerUp) o2).setActivo(false);
 							break;
 						case 2:
-							((Jugador) o1).setModificadorX(((PowerUp) o2).getEfecto());
+							//((Jugador) o1).setModificadorX(((PowerUp) o2).getEfecto());
 							((PowerUp) o2).setActivo(false);
 							break;
 						case 3:
-							((Jugador) o1).setModificadorY(((PowerUp) o2).getEfecto());
+							//((Jugador) o1).setModificadorY(((PowerUp) o2).getEfecto());
 							((PowerUp) o2).setActivo(false);
 							break;
 						}
 					}
 					if (o1 instanceof PowerUp && o2 instanceof Jugador) {
-						System.out.println(((PowerUp) o1).getNumeroPowerUp());
 						switch (((PowerUp) o1).getNumeroPowerUp()) {
 						case 1:
 							((Jugador) o2).setModificadorX(((PowerUp) o1).getEfecto());
-							((PowerUp) o2).setActivo(false);
+							((PowerUp) o1).setActivo(false);
 							break;
 						case 2:
-							((Jugador) o2).setModificadorX(((PowerUp) o1).getEfecto());
-							((PowerUp) o2).setActivo(false);
+							//((Jugador) o2).setModificadorX(((PowerUp) o1).getEfecto());
+							((PowerUp) o1).setActivo(false);
 							break;
 						case 3:
-							((Jugador) o2).setModificadorY(((PowerUp) o1).getEfecto());
-							((PowerUp) o2).setActivo(false);
+							//((Jugador) o2).setModificadorY(((PowerUp) o1).getEfecto());
+							((PowerUp) o1).setActivo(false);
 							break;
 						}
 					}
@@ -101,6 +100,7 @@ public class PantallaRonda2 extends PantallaRonda{
 		if(Global.ronda==2) {
 			update(delta);
 			
+			System.out.println(tiempo);
 			tmr.setView(camera);
 			tmr.render();
 			b2dr.render(mundo, camera.combined);
@@ -117,7 +117,6 @@ public class PantallaRonda2 extends PantallaRonda{
 													  + "%" + (plataformaMovil[i].getPosition().y - (plataformaMovil[i].getSize().y/2)) );
 			}
 			
-			
 			Render.batch.setProjectionMatrix(camera.combined);
 	     	Gdx.input.setInputProcessor(stage);
 		}
@@ -133,10 +132,11 @@ public class PantallaRonda2 extends PantallaRonda{
 		for (int i = 0; i < powerUp.length; i++) {
 			if (!powerUp[i].isActivo()) {
 				powerUp[i].setWorldActive(false);
+				Utiles.hs.enviarMensajeATodos("powerUps%desactivar%" + i);
 			}
-			if (!powerUp[i].isActivo() && (int) (tiempo % powerUp[i].getCoolDown()) == 0) {
-				powerUp[i].setActivo(true);
+			if (powerUp[i].isActivo()) {
 				powerUp[i].setWorldActive(true);
+				Utiles.hs.enviarMensajeATodos("powerUps%activar%" + i);
 			}
 		}
 		

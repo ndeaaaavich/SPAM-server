@@ -6,7 +6,7 @@ public class DobleSalto extends PowerUp {
 
 	public DobleSalto(World mundo, float positionX, float positionY) {
 		super(mundo, positionX, positionY, 3, "personajes/badlogic.jpg");
-		super.setEfecto(1);
+		super.setEfecto(0.5f);
 	}
 
 }

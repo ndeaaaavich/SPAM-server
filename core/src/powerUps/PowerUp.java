@@ -2,6 +2,7 @@ package powerUps;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import cuerpos.Cuerpo;
-import utiles.Utiles;
 
 public class PowerUp extends Actor{
 	
@@ -18,7 +18,7 @@ public class PowerUp extends Actor{
 	protected Sprite spr;
 	
 	private int numeroPowerUp;
-	private float efecto, coolDown = 5/*, carga*/;
+	private float efecto, coolDown = 5, carga;
 	private boolean activo = true;
 	
 	public PowerUp(World mundo, float positionX, float positionY, int numeroPowerUp, String fileName) {
@@ -37,6 +37,10 @@ public class PowerUp extends Actor{
 	    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 	    if(activo) {
 	    	spr.draw(batch);
+	    	carga = 0;
+	    }else {
+	    	carga += Gdx.graphics.getRawDeltaTime();
+	    	activo = ((int)carga == coolDown)?true:false;
 	    }
 	}
 	
