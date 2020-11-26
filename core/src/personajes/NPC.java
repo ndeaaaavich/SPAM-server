@@ -14,7 +14,7 @@ import eventos.InterfaceRobable;
 public class NPC extends Entidad implements InterfaceRobable{
 	private int random = 0; // 1 arriba 2 abajo 3 izquierda 4 derecha 5-40 nada
 	private int randomDirec;
-	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false;
+	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false, salaRobada = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
 	private float posX , posY;
 	private int movimientoElegido;
@@ -48,6 +48,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 	public void salaRobada(int sala) {
 		if(getSala() == sala) {
 			setRobado(true);
+			salaRobada = true;
 		}
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
@@ -56,10 +57,6 @@ public class NPC extends Entidad implements InterfaceRobable{
 	public void draw(Batch batch, float parentAlpha) {
 		Color color = getColor();
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-
-		if(detectado){
-			//sprExclamation.draw(batch);
-		}
 	}
 	public void act(float delta) {	
 		if(detectado) {
@@ -67,7 +64,7 @@ public class NPC extends Entidad implements InterfaceRobable{
 			if(tiempoDetectado > 5){
 				tiempoDetectado = 0;
 				detectado = false;
-				setRobado(false);
+				setRobado(salaRobada);
 			}
 		}
 

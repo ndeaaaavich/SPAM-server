@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import cuerpos.Cuerpo;
 import cuerpos.Plataforma;
+import personajes.EstadoMovimiento;
 import personajes.Guardia;
 import personajes.Jugador;
 import personajes.Ladron;
@@ -81,9 +82,11 @@ public class PantallaRonda2 extends PantallaRonda{
 					}
 					if(o2 instanceof Cuerpo && o1 instanceof Jugador) {
 						((Jugador) o1).setSalto(false);
+						((Jugador) o1).setEstado(EstadoMovimiento.parado);
 					}
 					if(o1 instanceof Cuerpo && o2 instanceof Jugador) {
 						((Jugador) o2).setSalto(false);
+						((Jugador) o2).setEstado(EstadoMovimiento.parado);
 					}
 				} catch (Exception e) {
 				}
@@ -94,9 +97,11 @@ public class PantallaRonda2 extends PantallaRonda{
 				Object o2 = contact.getFixtureB().getBody().getUserData();
 				if(o2 instanceof Cuerpo && o1 instanceof Jugador) {
 					((Jugador) o1).setSalto(true);
+					((Jugador) o1).setEstado(EstadoMovimiento.cayendo);
 				}
 				if(o1 instanceof Cuerpo && o2 instanceof Jugador) {
 					((Jugador) o2).setSalto(true);
+					((Jugador) o2).setEstado(EstadoMovimiento.cayendo);
 				}
 			}
 			@Override
@@ -119,7 +124,7 @@ public class PantallaRonda2 extends PantallaRonda{
 			
 			stage.act();
 			stage.draw();
-			//System.out.println("ladron estado previo " + jugadorLadron.getEstadoPrevio() + " estado " + jugadorLadron.getEstado());
+			System.out.println("ladron estado previo " + jugadorLadron.getEstadoPrevio() + " estado " + jugadorLadron.getEstado());
 			movimiento();
 			
 			for (int i = 0; i < plataformaMovil.length; i++) {
@@ -185,13 +190,15 @@ public class PantallaRonda2 extends PantallaRonda{
 	}
 	public void movimiento() {
 		if(keyDownGuardia) {
-			fuerzaYGuardia = (fuerzaYGuardia != 0 && !jugadorGuardia.isSalto())?fuerzaYGuardia:0;
 			jugadorGuardia.getCuerpo().setLinearVelocity(fuerzaXGuardia, 0);
+			
+			fuerzaYGuardia = (fuerzaYGuardia != 0 && !jugadorGuardia.isSalto())?fuerzaYGuardia:0;
 			jugadorGuardia.getCuerpo().applyLinearImpulse(0, fuerzaYGuardia);
 		}
 		if(keyDownLadron) {
-			fuerzaYLadron = (fuerzaYLadron != 0 && !jugadorLadron.isSalto())?fuerzaYLadron:0;
 			jugadorLadron.getCuerpo().setLinearVelocity(fuerzaXLadron, 0);
+			
+			fuerzaYLadron = (fuerzaYLadron != 0 && !jugadorLadron.isSalto())?fuerzaYLadron:0;
 			jugadorLadron.getCuerpo().applyLinearImpulse(0, fuerzaYLadron);
 		}
 	}

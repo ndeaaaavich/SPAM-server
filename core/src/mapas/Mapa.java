@@ -81,8 +81,8 @@ public class Mapa{
 					//en el else se hacen el respto de cuerpos que del tiledMap
 					new Cuerpo(mundo, rec.getWidth() , rec.getHeight() , 
 						       BodyType.StaticBody , 
-						       (rec.getX()+rec.getWidth()/ 2) , (rec.getY()+rec.getHeight()/ 2),
-						       (Global.ronda != 1)?true:false);
+						       (rec.getX()+rec.getWidth()/ 2) , (rec.getY()+rec.getHeight()/ 2)/*,
+						       (Global.ronda != 1)?true:false*/);
 					
 				}
 			}
