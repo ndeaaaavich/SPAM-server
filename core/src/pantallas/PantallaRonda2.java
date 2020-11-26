@@ -25,7 +25,6 @@ public class PantallaRonda2 extends PantallaRonda{
 
 	private PowerUp[] powerUp;
 	private Plataforma[] plataformaMovil;
-	private float tiempo;
 	public float fuerzaXGuardia, fuerzaYGuardia;
 	public float fuerzaXLadron, fuerzaYLadron;
 	public boolean keyDownGuardia, keyDownLadron;
@@ -55,11 +54,11 @@ public class PantallaRonda2 extends PantallaRonda{
 							((PowerUp) o2).setActivo(false);
 							break;
 						case 2:
-							//((Jugador) o1).setModificadorX(((PowerUp) o2).getEfecto());
+							((Jugador) o1).setModificadorX(((PowerUp) o2).getEfecto());
 							((PowerUp) o2).setActivo(false);
 							break;
 						case 3:
-							//((Jugador) o1).setModificadorY(((PowerUp) o2).getEfecto());
+							((Jugador) o1).setModificadorY(((PowerUp) o2).getEfecto());
 							((PowerUp) o2).setActivo(false);
 							break;
 						}
@@ -71,20 +70,34 @@ public class PantallaRonda2 extends PantallaRonda{
 							((PowerUp) o1).setActivo(false);
 							break;
 						case 2:
-							//((Jugador) o2).setModificadorX(((PowerUp) o1).getEfecto());
+							((Jugador) o2).setModificadorX(((PowerUp) o1).getEfecto());
 							((PowerUp) o1).setActivo(false);
 							break;
 						case 3:
-							//((Jugador) o2).setModificadorY(((PowerUp) o1).getEfecto());
+							((Jugador) o2).setModificadorY(((PowerUp) o1).getEfecto());
 							((PowerUp) o1).setActivo(false);
 							break;
 						}
+					}
+					if(o2 instanceof Cuerpo && o1 instanceof Jugador) {
+						((Jugador) o1).setSalto(false);
+					}
+					if(o1 instanceof Cuerpo && o2 instanceof Jugador) {
+						((Jugador) o2).setSalto(false);
 					}
 				} catch (Exception e) {
 				}
 			}
 			@Override
 			public void endContact(Contact contact) {
+				Object o1 = contact.getFixtureA().getBody().getUserData();
+				Object o2 = contact.getFixtureB().getBody().getUserData();
+				if(o2 instanceof Cuerpo && o1 instanceof Jugador) {
+					((Jugador) o1).setSalto(true);
+				}
+				if(o1 instanceof Cuerpo && o2 instanceof Jugador) {
+					((Jugador) o2).setSalto(true);
+				}
 			}
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
@@ -100,14 +113,13 @@ public class PantallaRonda2 extends PantallaRonda{
 		if(Global.ronda==2) {
 			update(delta);
 			
-			System.out.println(tiempo);
 			tmr.setView(camera);
 			tmr.render();
 			b2dr.render(mundo, camera.combined);
 			
 			stage.act();
 			stage.draw();
-
+			//System.out.println("ladron estado previo " + jugadorLadron.getEstadoPrevio() + " estado " + jugadorLadron.getEstado());
 			movimiento();
 			
 			for (int i = 0; i < plataformaMovil.length; i++) {
@@ -173,10 +185,14 @@ public class PantallaRonda2 extends PantallaRonda{
 	}
 	public void movimiento() {
 		if(keyDownGuardia) {
-			jugadorGuardia.getCuerpo().setLinearVelocity(fuerzaXGuardia, fuerzaYGuardia);
+			fuerzaYGuardia = (fuerzaYGuardia != 0 && !jugadorGuardia.isSalto())?fuerzaYGuardia:0;
+			jugadorGuardia.getCuerpo().setLinearVelocity(fuerzaXGuardia, 0);
+			jugadorGuardia.getCuerpo().applyLinearImpulse(0, fuerzaYGuardia);
 		}
 		if(keyDownLadron) {
-			jugadorLadron.getCuerpo().setLinearVelocity(fuerzaXLadron, fuerzaYLadron);
+			fuerzaYLadron = (fuerzaYLadron != 0 && !jugadorLadron.isSalto())?fuerzaYLadron:0;
+			jugadorLadron.getCuerpo().setLinearVelocity(fuerzaXLadron, 0);
+			jugadorLadron.getCuerpo().applyLinearImpulse(0, fuerzaYLadron);
 		}
 	}
 }

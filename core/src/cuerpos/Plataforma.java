@@ -17,7 +17,7 @@ public class Plataforma {
 	private boolean llegada = false;
 	
 	public Plataforma(World mundo, float ancho, float alto, float positionX, float positionY) {
-		cuerpo = new Cuerpo(mundo, ancho, alto, BodyType.KinematicBody, positionX, positionY);
+		cuerpo = new Cuerpo(mundo, ancho, alto, BodyType.KinematicBody, positionX, positionY, true);
 	}
 	public void moverPlataforma(float delta) {
 		tiempo += delta;

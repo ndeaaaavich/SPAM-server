@@ -7,18 +7,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import cuerpos.Cuerpo;
-import utiles.Utiles;
 
 public abstract class Jugador extends Entidad{
 
 
 	protected InputListener Inputlistener;
 	
-	public boolean cambiarSala = false, keyDown;
+	public boolean cambiarSala = false, keyDown, salto;
 	public int salaAnterior;
 	public float modificadorX = 0, modificadorY = 0, 
-				 duracionModif = 10, tiempoTranscurrido;
-	
+				 duracionModif = 10, tiempoTranscurrido,
+				 fuerzaSalto = 0.2f;
 	public Jugador(Cuerpo cuerpo, String sprite) {
 		super(cuerpo, sprite);
 	}
@@ -38,10 +37,6 @@ public abstract class Jugador extends Entidad{
 		Color color = getColor();
 	    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 	}
-	
-	public void setDireccion(Vector2 xy) {
-		cuerpo.setLinearVelocity(xy.x, xy.y);	
-	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SETTERS------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------
@@ -56,6 +51,12 @@ public abstract class Jugador extends Entidad{
 			this.modificadorY = modificadorY;
 			velocidad += velocidad * modificadorX;
 		}
+	}
+	public void setDireccion(Vector2 xy) {
+		cuerpo.setLinearVelocity(xy.x, xy.y);	
+	}
+	public void setSalto(boolean salto) {
+		this.salto = salto;
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------GETTERS------------------------------------------------------------------
@@ -75,4 +76,10 @@ public abstract class Jugador extends Entidad{
 	public float getModificadorY() {
 		return modificadorY;
 	}	
+	public boolean isSalto() {
+		return salto;
+	}
+	public float getFuerzaSalto() {
+		return fuerzaSalto;
+	}
 }

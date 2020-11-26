@@ -2,11 +2,8 @@ package mapas;
 
 import com.badlogic.gdx.maps.MapObject;
 
-
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -14,10 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import utiles.Global;
-import utiles.Utiles;
 import cuerpos.Cuerpo;
-
-//import juego.Cuerpo;
 
 public class Mapa{
 
@@ -87,7 +81,8 @@ public class Mapa{
 					//en el else se hacen el respto de cuerpos que del tiledMap
 					new Cuerpo(mundo, rec.getWidth() , rec.getHeight() , 
 						       BodyType.StaticBody , 
-						       (rec.getX()+rec.getWidth()/ 2) , (rec.getY()+rec.getHeight()/ 2) );
+						       (rec.getX()+rec.getWidth()/ 2) , (rec.getY()+rec.getHeight()/ 2),
+						       (Global.ronda != 1)?true:false);
 					
 				}
 			}

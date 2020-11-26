@@ -15,7 +15,7 @@ public abstract class Entidad extends Actor{
 	protected int ultimoIndice, sala = -1;
 	protected float duracion, fuerzaY = 0, fuerzaX = 0, velocidad = 1;
 	protected boolean derecha = true, cambioDeFuerzas; // por default todos los pj aparecen mirando a la derecha
-	protected EstadoMovimiento estado;
+	protected EstadoMovimiento estado, estadoPrevio;
 
 	protected int numEstado;
 
@@ -64,6 +64,9 @@ public abstract class Entidad extends Actor{
 	public EstadoMovimiento getEstado() {
 		return estado;
 	}
+	public EstadoMovimiento getEstadoPrevio() {
+		return estadoPrevio;
+	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SETTERS------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------
@@ -88,5 +91,8 @@ public abstract class Entidad extends Actor{
 	}
 	public void setEstado(EstadoMovimiento estado) {
 		this.estado = estado;
+	}
+	public void setEstadoPrevio(EstadoMovimiento estadoPrevio) {
+		this.estadoPrevio = estadoPrevio;
 	}
 }
