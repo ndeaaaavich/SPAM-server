@@ -107,13 +107,13 @@ public class HiloServidor extends Thread {
 
 						System.out.println("Creando los npcs: ");
 						for (int i = 0; i < npcs.length; i++) {
-							enviarMensajeATodos("npcs%" + "crear%" + i + "%" + npcs[i].getSprite() + "%"
-									+ npcs[i].getCuerpo().getAncho() / Utiles.PPM + "%"
-									+ npcs[i].getCuerpo().getAlto() / Utiles.PPM + "%"
-									+ npcs[i].getPosition().x / Utiles.PPM + "%" + npcs[i].getPosition().y / Utiles.PPM
-									+ "%" + npcs[i].getApariencia()[0] + "%" + npcs[i].getApariencia()[1] + "%"
-									+ npcs[i].getApariencia()[2]);
-							System.out.print(i + " ");
+							enviarMensajeATodos("npcs%" + "crear%" + i + "%" + npcs[i].getSprite() 
+                                    + "%" + npcs[i].getPosition().x / Utiles.PPM 
+                                    + "%" + npcs[i].getPosition().y / Utiles.PPM
+                                    + "%" + npcs[i].getApariencia()[0] 
+                                    + "%" + npcs[i].getApariencia()[1]
+                                    + "%" + npcs[i].getApariencia()[2]
+                                    + "%" + npcs[i].getSala());
 						}
 
 						System.out.println("Creando el ladron:");

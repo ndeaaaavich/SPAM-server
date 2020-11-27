@@ -14,12 +14,11 @@ import eventos.InterfaceRobable;
 public class NPC extends Entidad implements InterfaceRobable{
 	private int random = 0; // 1 arriba 2 abajo 3 izquierda 4 derecha 5-40 nada
 	private int randomDirec;
-	private boolean finRecorrido, detectado, derecha, CambioDirec, robado = false, salaRobada = false;
+	private boolean finRecorrido, detectado, CambioDirec, robado = false, salaRobada = false;
 	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
 	private float posX , posY;
 	private int movimientoElegido;
 	private boolean mover;
-	private int idMensaje = 0;
 	
 	private int[] apariencia = new int[3]; 
 	//0 pelo 
