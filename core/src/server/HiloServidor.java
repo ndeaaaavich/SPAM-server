@@ -107,12 +107,13 @@ public class HiloServidor extends Thread {
 
 						System.out.println("Creando los npcs: ");
 						for (int i = 0; i < npcs.length; i++) {
-							enviarMensajeATodos("npcs%" + "crear%" + i + "%" + npcs[i].getSprite() + "%"
-									+ npcs[i].getCuerpo().getAncho() / Utiles.PPM + "%"
-									+ npcs[i].getCuerpo().getAlto() / Utiles.PPM + "%"
-									+ npcs[i].getPosition().x / Utiles.PPM + "%" + npcs[i].getPosition().y / Utiles.PPM
-									+ "%" + npcs[i].getApariencia()[0] + "%" + npcs[i].getApariencia()[1] + "%"
-									+ npcs[i].getApariencia()[2]);
+							enviarMensajeATodos("npcs%" + "crear%" + i + "%" + npcs[i].getSprite() 
+									+ "%" + npcs[i].getPosition().x / Utiles.PPM 
+									+ "%" + npcs[i].getPosition().y / Utiles.PPM
+									+ "%" + npcs[i].getApariencia()[0] 
+									+ "%" + npcs[i].getApariencia()[1]
+									+ "%" + npcs[i].getApariencia()[2]
+									+ "%" + npcs[i].getSala());
 							System.out.print(i + " ");
 						}
 
@@ -162,11 +163,9 @@ public class HiloServidor extends Thread {
 						((PantallaRonda1) app).mapa.getVectorZonas()[Integer.parseInt(mensajeParametrizado[2])].setRobado(true);
 
 						for (int i = 0; i < Utiles.getListeners().size(); i++) {
-							((InterfaceRobable) Utiles.getListeners().get(i))
-									.salaRobada(Integer.parseInt(mensajeParametrizado[2]));
+							((InterfaceRobable) Utiles.getListeners().get(i)).salaRobada(Integer.parseInt(mensajeParametrizado[2]));
 						}
-						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),
-								clientes[0].getPuerto());
+						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),clientes[0].getPuerto());
 
 					} else if (mensajeParametrizado[1].equals("gano")) {
 						Global.puntajeLadron++;

@@ -161,7 +161,6 @@ public class PantallaRonda1 extends PantallaRonda{
 							}
 						}
 						if (o2 instanceof NPC) {// comprueba si el objeto que choca es el NPC
-
 							((NPC) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del NPC a la sala
 																		// en la que está
 							if (((Cuerpo) o1).isRobado()) {// si en la sala ya se realizó un robo el atributo
