@@ -171,6 +171,11 @@ public class NPC extends Entidad implements InterfaceRobable{
 		this.CambioDirec = parar;
 		tiempo = 0;
 	}
+	@Override
+	public void setSala(int sala) {
+		this.sala = sala;
+		Utiles.hs.enviarMensajeATodos("npcs%sala%" + identificador + "%" + this.sala);
+	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
 		
 		if(fuerzaNuevaX != fuerzaX){

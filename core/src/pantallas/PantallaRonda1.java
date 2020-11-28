@@ -40,11 +40,9 @@ public class PantallaRonda1 extends PantallaRonda{
 	
 	@Override
 	public void show() {
-		//b2dr.setDrawBodies(false);
-		
-		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, 200*Utiles.PPM, 160*Utiles.PPM), "personajes/badlogic.jpg");
+		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, 0, 0), "personajes/badlogic.jpg");
 		stage.addActor(jugadorGuardia);
-		jugadorGuardia.setPosition(mapa.getVectorZonas()[0].getPosition().x, mapa.getVectorZonas()[0].getPosition().y);
+		jugadorGuardia.setPosition(mapa.getVectorZonas()[1].getPosition().x, mapa.getVectorZonas()[1].getPosition().y);
 		//hilo server
 		Utiles.hs = new HiloServidor(this);
 		Utiles.hs.start();
@@ -75,8 +73,8 @@ public class PantallaRonda1 extends PantallaRonda{
 								}else {
 									
 									Utiles.hs.enviarMensaje("sala%anterior%" + ((Jugador) o1).getSala(), 
-											Utiles.hs.getClientes()[1].getIp(), 
-											Utiles.hs.getClientes()[1].getPuerto());	
+															Utiles.hs.getClientes()[1].getIp(), 
+															Utiles.hs.getClientes()[1].getPuerto());	
 								}
 							}
 							
@@ -161,7 +159,6 @@ public class PantallaRonda1 extends PantallaRonda{
 							}
 						}
 						if (o2 instanceof NPC) {// comprueba si el objeto que choca es el NPC
-
 							((NPC) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del NPC a la sala
 																		// en la que está
 							if (((Cuerpo) o1).isRobado()) {// si en la sala ya se realizó un robo el atributo

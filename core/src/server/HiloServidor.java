@@ -282,6 +282,7 @@ public class HiloServidor extends Thread {
 				app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
 			}
 		}
+		
 	}
 
 	public void enviarMensajeATodos(String msg) {
