@@ -32,10 +32,9 @@ public class PantallaRonda1 extends PantallaRonda{
 	public int indiceLadron;
 	public float posXLadron, posYLadron;
 	
-	int cont;
 	
 	public PantallaRonda1(Vector2 gravedad, String rutaMapa) {
-		super(gravedad, rutaMapa, 1);
+		super(gravedad, rutaMapa);
 	}
 	
 	@Override
@@ -44,10 +43,15 @@ public class PantallaRonda1 extends PantallaRonda{
 		stage.addActor(jugadorGuardia);
 		jugadorGuardia.setPosition(mapa.getVectorZonas()[1].getPosition().x, mapa.getVectorZonas()[1].getPosition().y);
 		//hilo server
-		Utiles.hs = new HiloServidor(this);
-		Utiles.hs.start();
+		System.out.println(Global.ronda );
+		if(Global.ronda == 1) {
+			Utiles.hs = new HiloServidor(this);
+			Utiles.hs.start();
+		}else {
+			Utiles.hs.setApp(this);
+		}
+		Global.terminaRonda = false;
 		//eventos
-
 		stage.setKeyboardFocus(jugadorGuardia);
 		
 		// eventos
@@ -200,7 +204,7 @@ public class PantallaRonda1 extends PantallaRonda{
 	public void render(float delta) {
 		Render.limpiarPantalla();
 		if(Global.empiezaJuego) {
-			if (Global.ronda == 1) {
+			if (!Global.terminaRonda) {
 				update(delta);
 				tmr.setView(camera);
 				tmr.render();
@@ -210,9 +214,11 @@ public class PantallaRonda1 extends PantallaRonda{
 
 				Render.batch.setProjectionMatrix(camera.combined);
 				Gdx.input.setInputProcessor(stage);
-			}else {
-				Utiles.principal.setScreen(new PantallaRonda2(new Vector2(0, -9.8f), "mapas/ronda2.tmx"));
+			}else{
+				Utiles.principal.setScreen(new PantallaRonda1(new Vector2(0, 0), ("mapas/escenario.tmx")));
 			}
+		}else {
+			
 		}
 	}
 	

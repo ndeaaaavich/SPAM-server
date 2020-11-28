@@ -56,6 +56,7 @@ public class Interfaz extends Actor{
 		if(touchdown){
 			if(filename.equals("botones/boton 1.png")){
 				Utiles.principal.setScreen(new PantallaRonda1(new Vector2(0, 0), ("mapas/escenario.tmx")));
+				System.out.println("aaaaaaa");
 			}else if(filename.equals("botones/boton 2.png")){
 				
 			}else if(filename.equals("botones/boton 3.png")){

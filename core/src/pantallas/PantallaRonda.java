@@ -38,8 +38,7 @@ public class PantallaRonda implements Screen {
 	protected FitViewport viewport;
 	public Stage stage;
 
-	public PantallaRonda(Vector2 gravedad, String rutaMapa, int numRonda) {
-		Global.ronda = numRonda;
+	public PantallaRonda(Vector2 gravedad, String rutaMapa) {
 		int WScreen = Gdx.graphics.getWidth();
 		int HScreen = Gdx.graphics.getHeight();
 		

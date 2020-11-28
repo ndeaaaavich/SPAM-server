@@ -31,7 +31,7 @@ public class PantallaRonda2 extends PantallaRonda{
 	public boolean keyDownGuardia, keyDownLadron;
 	
 	public PantallaRonda2(Vector2 gravedad, String rutaMapa) {
-		super(gravedad, rutaMapa, 2);
+		super(gravedad, rutaMapa);
 	}
 	@Override
 	public void show() {
