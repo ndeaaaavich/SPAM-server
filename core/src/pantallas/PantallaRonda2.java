@@ -124,7 +124,7 @@ public class PantallaRonda2 extends PantallaRonda{
 			
 			stage.act();
 			stage.draw();
-			System.out.println("ladron estado previo " + jugadorLadron.getEstadoPrevio() + " estado " + jugadorLadron.getEstado());
+			
 			movimiento();
 			
 			for (int i = 0; i < plataformaMovil.length; i++) {
