@@ -167,7 +167,7 @@ public class HiloServidor extends Thread {
 						for (int i = 0; i < Utiles.getListeners().size(); i++) {
 							((InterfaceRobable) Utiles.getListeners().get(i)).salaRobada(Integer.parseInt(mensajeParametrizado[2]));
 						}
-						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),clientes[0].getPuerto());
+						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3]+ "%" + mensajeParametrizado[4], clientes[0].getIp(),clientes[0].getPuerto());
 
 					} else if (mensajeParametrizado[1].equals("gano")) {
 						Global.puntajeLadron++;
