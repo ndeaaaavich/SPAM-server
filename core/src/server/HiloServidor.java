@@ -108,17 +108,20 @@ public class HiloServidor extends Thread {
 						System.out.println("Creando los npcs: ");
 						for (int i = 0; i < npcs.length; i++) {
 							enviarMensajeATodos("npcs%" + "crear%" + i + "%" + npcs[i].getSprite() 
-                                    + "%" + npcs[i].getPosition().x / Utiles.PPM 
-                                    + "%" + npcs[i].getPosition().y / Utiles.PPM
-                                    + "%" + npcs[i].getApariencia()[0] 
-                                    + "%" + npcs[i].getApariencia()[1]
-                                    + "%" + npcs[i].getApariencia()[2]
-                                    + "%" + npcs[i].getSala());
+									+ "%" + npcs[i].getPosition().x / Utiles.PPM 
+									+ "%" + npcs[i].getPosition().y / Utiles.PPM
+									+ "%" + npcs[i].getApariencia()[0] 
+									+ "%" + npcs[i].getApariencia()[1]
+									+ "%" + npcs[i].getApariencia()[2]
+									+ "%" + npcs[i].getSala());
+							System.out.print(i + " ");
 						}
 
 						System.out.println("Creando el ladron:");
-						enviarMensajeATodos("ladron%" + ((PantallaRonda1) app).indiceLadron + "%"
-								+ ((PantallaRonda1) app).posXLadron + "%" + ((PantallaRonda1) app).posYLadron);
+						enviarMensajeATodos("ladron%" + ((PantallaRonda1) app).indiceLadron
+													  + "%" + ((PantallaRonda1) app).posXLadron 
+													  + "%" + ((PantallaRonda1) app).posYLadron
+													  + "%" + app.jugadorLadron.getSala());
 						System.out.println("1");
 
 						Global.conexion = true;
@@ -162,11 +165,9 @@ public class HiloServidor extends Thread {
 						((PantallaRonda1) app).mapa.getVectorZonas()[Integer.parseInt(mensajeParametrizado[2])].setRobado(true);
 
 						for (int i = 0; i < Utiles.getListeners().size(); i++) {
-							((InterfaceRobable) Utiles.getListeners().get(i))
-									.salaRobada(Integer.parseInt(mensajeParametrizado[2]));
+							((InterfaceRobable) Utiles.getListeners().get(i)).salaRobada(Integer.parseInt(mensajeParametrizado[2]));
 						}
-						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),
-								clientes[0].getPuerto());
+						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3], clientes[0].getIp(),clientes[0].getPuerto());
 
 					} else if (mensajeParametrizado[1].equals("gano")) {
 						Global.puntajeLadron++;
@@ -196,20 +197,18 @@ public class HiloServidor extends Thread {
 
 	private void movimientoLadron(String[] mensajeParametrizado, boolean keyDown) {
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_UP
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.W) {
-
-			if (app.jugadorLadron.getEstado() != EstadoMovimiento.cayendo) {
-				if (keyDown) {
-					fuerzaY = (Global.ronda == 1) ? app.jugadorLadron.getVelocidad(): app.jugadorLadron.getFuerzaSalto();
-					app.jugadorLadron.setEstado(EstadoMovimiento.movimientoY);
-				} else {
-					fuerzaY = 0;
-					app.jugadorLadron.setEstado(EstadoMovimiento.parado);
-				}
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.W) {
+			if (keyDown) {
+				fuerzaY = (Global.ronda == 1) ? app.jugadorLadron.getVelocidad(): app.jugadorLadron.getFuerzaSalto();
+				app.jugadorLadron.setEstado(EstadoMovimiento.movimientoY);
+			} else {
+				fuerzaY = 0;
+				app.jugadorLadron.setEstado(EstadoMovimiento.parado);
 			}
 		}
 		if ((Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_DOWN
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.S) && Global.ronda == 1) {
+		  || Integer.parseInt(mensajeParametrizado[1]) == Keys.S) 
+		  && Global.ronda == 1) {
 			if (keyDown) {
 				fuerzaY = -app.jugadorLadron.getVelocidad();
 				app.jugadorLadron.setEstado(EstadoMovimiento.movimientoY);
@@ -219,50 +218,42 @@ public class HiloServidor extends Thread {
 			}
 		}
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_RIGHT
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.D) {
-			if (app.jugadorLadron.getEstado() != EstadoMovimiento.cayendo) {
-				if (keyDown) {
-					fuerzaX = app.jugadorLadron.getVelocidad();
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.D) {
+			if (keyDown) {
+				fuerzaX = app.jugadorLadron.getVelocidad();
 					app.jugadorLadron.setEstado(EstadoMovimiento.corriendoDerecha);
-				
-				} else {
-					fuerzaX = 0;
-					app.jugadorLadron.setEstado(EstadoMovimiento.parado);
-				}
+			
+			} else {
+				fuerzaX = 0;
+				app.jugadorLadron.setEstado(EstadoMovimiento.parado);
 			}
 		}
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_LEFT
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.A) {
-
-			if (app.jugadorLadron.getEstado() != EstadoMovimiento.cayendo) {
-				if (keyDown) {
-					fuerzaX = -app.jugadorLadron.getVelocidad();
-					app.jugadorLadron.setEstado(EstadoMovimiento.corriendoIzquierda);
-
-				} else {
-					fuerzaX = 0;
-					app.jugadorLadron.setEstado(EstadoMovimiento.parado);
-				}
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.A) {
+			if (keyDown) {
+				fuerzaX = -app.jugadorLadron.getVelocidad();
+				app.jugadorLadron.setEstado(EstadoMovimiento.corriendoIzquierda);
+			} else {
+				fuerzaX = 0;
+				app.jugadorLadron.setEstado(EstadoMovimiento.parado);
 			}
 		}
 	}
 
 	private void movimientoGuardia(String[] mensajeParametrizado, boolean keyDown) {
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_UP
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.W) {
-
-			if (app.jugadorGuardia.getEstado() != EstadoMovimiento.cayendo) {
-				if (keyDown) {
-					fuerzaY = (Global.ronda == 1) ? app.jugadorGuardia.getVelocidad(): app.jugadorGuardia.getFuerzaSalto();
-					app.jugadorGuardia.setEstado(EstadoMovimiento.movimientoY);
-				} else {
-					fuerzaY = 0;
-					app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
-				}
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.W) {
+			if (keyDown) {
+				fuerzaY = (Global.ronda == 1) ? app.jugadorGuardia.getVelocidad(): app.jugadorGuardia.getFuerzaSalto();
+				app.jugadorGuardia.setEstado(EstadoMovimiento.movimientoY);
+			} else {
+				fuerzaY = 0;
+				app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
 			}
 		}
 		if ((Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_DOWN
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.S) && Global.ronda == 1) {
+		  || Integer.parseInt(mensajeParametrizado[1]) == Keys.S) 
+		  && Global.ronda == 1) {
 			if (keyDown) {
 				fuerzaY = -app.jugadorGuardia.getVelocidad();
 				app.jugadorGuardia.setEstado(EstadoMovimiento.movimientoY);
@@ -272,9 +263,7 @@ public class HiloServidor extends Thread {
 			}
 		}
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_RIGHT
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.D) {
-
-			if (app.jugadorGuardia.getEstado() != EstadoMovimiento.cayendo) {
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.D) {
 				if (keyDown) {
 					fuerzaX = app.jugadorGuardia.getVelocidad();
 					app.jugadorGuardia.setEstado(EstadoMovimiento.corriendoDerecha);
@@ -282,20 +271,15 @@ public class HiloServidor extends Thread {
 					fuerzaX = 0;
 					app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
 				}
-			}
 		}
 		if (Integer.parseInt(mensajeParametrizado[1]) == Keys.DPAD_LEFT
-				|| Integer.parseInt(mensajeParametrizado[1]) == Keys.A) {
-
-			if (app.jugadorGuardia.getEstado() != EstadoMovimiento.cayendo) {
-				if (keyDown) {
-					fuerzaX = -app.jugadorGuardia.getVelocidad();
-					app.jugadorGuardia.setEstado(EstadoMovimiento.corriendoIzquierda);
-
-				} else {
-					fuerzaX = 0;
-					app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
-				}
+		 || Integer.parseInt(mensajeParametrizado[1]) == Keys.A) {
+			if (keyDown) {
+				fuerzaX = -app.jugadorGuardia.getVelocidad();
+				app.jugadorGuardia.setEstado(EstadoMovimiento.corriendoIzquierda);
+			} else {
+				fuerzaX = 0;
+				app.jugadorGuardia.setEstado(EstadoMovimiento.parado);
 			}
 		}
 	}
