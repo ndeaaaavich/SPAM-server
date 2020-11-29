@@ -23,9 +23,8 @@ public class HiloServidor extends Thread {
 	private boolean fin = false;
 	private DireccionRed[] clientes = new DireccionRed[2];
 
-	private int cantRobos = 0;
 	private int cantClientes = 0;
-
+	
 	private PantallaRonda app;
 	private float fuerzaX, fuerzaY;
 	private NPC[] npcs;
@@ -53,6 +52,7 @@ public class HiloServidor extends Thread {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
@@ -165,8 +165,13 @@ public class HiloServidor extends Thread {
 							((InterfaceRobable) Utiles.getListeners().get(i))
 									.salaRobada(Integer.parseInt(mensajeParametrizado[2]));
 						}
-						enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3]+ "%" + app.jugadorLadron.getApariencia()[cantRobos], clientes[0].getIp(),clientes[0].getPuerto());
-						cantRobos += 1;
+						
+						if (Integer.parseInt(mensajeParametrizado[4])!=-2) {
+							enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3] + "%" + app.jugadorLadron.getApariencia()[Integer.parseInt(mensajeParametrizado[4])]+ "%" + Integer.parseInt(mensajeParametrizado[4]), clientes[0].getIp(),clientes[0].getPuerto());
+						}else {
+							enviarMensaje("guardia%npcDialogo%" + mensajeParametrizado[3] + "%-1%-1", clientes[0].getIp(),clientes[0].getPuerto());
+						}
+						
 
 					} else if (mensajeParametrizado[1].equals("gano")) {
 						Global.puntajeLadron++;
