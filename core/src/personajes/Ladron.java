@@ -34,4 +34,8 @@ public class Ladron extends Jugador{
 	public void setDireccion(Vector2 xy) {
 		super.setDireccion(xy);
 	}
+	
+	public int[] getApariencia() {
+		return apariencia;
+	}
 }
