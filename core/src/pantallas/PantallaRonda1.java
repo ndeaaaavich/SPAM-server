@@ -18,7 +18,6 @@ import personajes.*;
 public class PantallaRonda1 extends PantallaRonda{
 
 	public NPC[] npcs = new NPC[8];
-	//private boolean cerca = false;
 
 	private float posX = 0, posY = 0;
 	private Vector2 posicion = new Vector2(0,0);
