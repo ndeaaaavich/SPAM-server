@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import cuerpos.Cuerpo;
+import utiles.Global;
 import utiles.Utiles;
 
 public class Guardia extends Jugador {
@@ -22,13 +23,15 @@ public class Guardia extends Jugador {
 	}
 	@Override
 	public void act(float delta) {
-		Utiles.hs.enviarMensajeATodos("actualizar%" + (cuerpo.getPosition().x - (cuerpo.getAncho()/2))
-											  + "%" + (cuerpo.getPosition().y - (cuerpo.getAlto()/2))
-											  + "%G");
-		for (int i = 0; i < EstadoMovimiento.values().length; i++) {
-			numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
+		if(!Global.terminaJuego) {
+			Utiles.hs.enviarMensajeATodos("actualizar%" + (cuerpo.getPosition().x - (cuerpo.getAncho()/2))
+												  + "%" + (cuerpo.getPosition().y - (cuerpo.getAlto()/2))
+												  + "%G");
+			for (int i = 0; i < EstadoMovimiento.values().length; i++) {
+				numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
+			}
+			Utiles.hs.enviarMensajeATodos("actualizar%" + "estado%" + numEstado + "%G");
 		}
-		Utiles.hs.enviarMensajeATodos("actualizar%" + "estado%" + numEstado + "%G");
 	}
 	public void setDireccion(Vector2 xy) {
 		super.setDireccion(xy);

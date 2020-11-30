@@ -101,23 +101,25 @@ public class NPC extends Entidad implements InterfaceRobable{
 		}
 		
 		animacionMovimiento();
+		if(!Global.terminaJuego) {
 		if(Global.empiezaJuego) {
-			if(finRecorrido) {
-				this.enviarFuerzas(-1,-1);
-			}else {
-				this.enviarFuerzas(1,1);
+				if(finRecorrido) {
+					this.enviarFuerzas(-1,-1);
+				}else {
+					this.enviarFuerzas(1,1);
+				}
 			}
+			if (mover) {
+				//se le resta la mitad del ancho y la del alto para alinear el centro de los body a la de las texturas
+				posX=cuerpo.getPosition().x-(cuerpo.getAncho()/2);
+				posY=cuerpo.getPosition().y-(cuerpo.getAlto()/2);
+				Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + posX + "%" + posY);
+			}
+			for (int i = 0; i < EstadoMovimiento.values().length; i++) {
+				numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
+			}
+			Utiles.hs.enviarMensajeATodos("npcs%" + "estado%" + identificador + "%" + numEstado);
 		}
-		if (mover) {
-			//se le resta la mitad del ancho y la del alto para alinear el centro de los body a la de las texturas
-			posX=cuerpo.getPosition().x-(cuerpo.getAncho()/2);
-			posY=cuerpo.getPosition().y-(cuerpo.getAlto()/2);
-			Utiles.hs.enviarMensajeATodos("npcs%" + "posicion%" + identificador + "%" + posX + "%" + posY);
-		}
-		for (int i = 0; i < EstadoMovimiento.values().length; i++) {
-			numEstado = (EstadoMovimiento.values()[i].equals(estado))? i : numEstado;
-		}
-		Utiles.hs.enviarMensajeATodos("npcs%" + "estado%" + identificador + "%" + numEstado);
 	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------ANIMACION----------------------------------------------------------------

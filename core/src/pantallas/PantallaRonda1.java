@@ -201,7 +201,9 @@ public class PantallaRonda1 extends PantallaRonda{
 	@Override
 	public void render(float delta) {
 		Render.limpiarPantalla();
-		if(Global.empiezaJuego) {
+		
+		if(Global.empiezaJuego && !Global.terminaJuego) {
+			
 			if (!Global.terminaRonda) {
 				update(delta);
 				tmr.setView(camera);
@@ -215,8 +217,6 @@ public class PantallaRonda1 extends PantallaRonda{
 			}else{
 				Utiles.principal.setScreen(new PantallaRonda1(new Vector2(0, 0), ("mapas/escenario.tmx")));
 			}
-		}else {
-			
 		}
 	}
 	
