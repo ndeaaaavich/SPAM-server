@@ -2,9 +2,6 @@ package main;
 
 import com.badlogic.gdx.Game;
 
-
-import pantallas.PantallaRonda1;
-import pantallas.PantallaRonda2;
 import pantallas.PantallaMenu;
 import utiles.Utiles;
 
