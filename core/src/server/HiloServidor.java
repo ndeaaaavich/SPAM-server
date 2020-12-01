@@ -54,7 +54,7 @@ public class HiloServidor extends Thread {
 		}
 
 	}
-
+ 
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
 		DatagramPacket dp = new DatagramPacket(data, data.length, ip, puerto);
@@ -103,6 +103,12 @@ public class HiloServidor extends Thread {
 			}
 		}
 		if (nroCliente != -1) {
+			
+			if (msg.equals("desconectarCliente") ) {
+				cantClientes --;
+				clientes[nroCliente] = null;
+			}
+			
 			if (msg.equals("Entidades") && cantClientes == 2) {
 				System.out.println("Hay dos clientes conectados");
 				((PantallaRonda1) app).crearNPCs(
