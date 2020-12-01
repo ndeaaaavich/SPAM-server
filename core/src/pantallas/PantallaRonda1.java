@@ -106,6 +106,10 @@ public class PantallaRonda1 extends PantallaRonda{
 						if (o1 instanceof NPC) {// comprueba si el objeto que choca es el NPC
 							((NPC) o1).setSala(((Cuerpo) o2).getZona());// cambia la sala del NPC a la sala
 																		// en la que está
+							if(((Cuerpo) o2).getCantEntidades() == 1) {
+								ultimoNPC( ((NPC) o1).getSala(), false);
+							}
+							((Cuerpo) o2).sumCantEntidades();
 							if (((Cuerpo) o2).isRobado()) {// si en la sala ya se realizó un robo el atributo
 															// robado del cuerpo que representa a la sala será true
 
@@ -163,8 +167,12 @@ public class PantallaRonda1 extends PantallaRonda{
 						if (o2 instanceof NPC) {// comprueba si el objeto que choca es el NPC
 							((NPC) o2).setSala(((Cuerpo) o1).getZona());// cambia la sala del NPC a la sala
 																		// en la que está
+							if(((Cuerpo) o1).getCantEntidades() == 1) {
+								ultimoNPC( ((NPC) o2).getSala(), false);
+							}
+							((Cuerpo) o1).sumCantEntidades();
 							if (((Cuerpo) o1).isRobado()) {// si en la sala ya se realizó un robo el atributo
-															// robado del cuerpo que representa a la sala será true
+														   // robado del cuerpo que representa a la sala será true
 
 								((NPC) o2).setRobado(true); // no se podrá robar en esta sala asi que se pone el
 															// atributo robado del NPC en true
@@ -172,12 +180,12 @@ public class PantallaRonda1 extends PantallaRonda{
 						}
 					}
 
-					if (o2 == null || o2 instanceof NPC) {
+					if (o1 == null || o1 instanceof NPC) {
 						if (o1 instanceof NPC) {
 							((NPC) o1).setCambioDirec(true);
 						}
 					}
-					if (o1 == null || o1 instanceof NPC) {
+					if (o2 == null || o2 instanceof NPC) {
 						if (o2 instanceof NPC) {
 							((NPC) o2).setCambioDirec(true);
 						}
@@ -188,6 +196,23 @@ public class PantallaRonda1 extends PantallaRonda{
 			}
 			@Override
 			public void endContact(Contact contact) {
+				Object o1 = contact.getFixtureA().getBody().getUserData();
+				Object o2 = contact.getFixtureB().getBody().getUserData();
+				try {
+					if (o1 instanceof NPC && o2 instanceof Cuerpo ) {
+						((Cuerpo) o2).restCantEntidades();
+						if(((Cuerpo) o2).getCantEntidades() == 1) {
+							ultimoNPC(((NPC) o1).getSala(), true);
+						}
+					}
+					if (o2 instanceof NPC && o1 instanceof Cuerpo ) {
+						((Cuerpo) o1).restCantEntidades();
+						if(((Cuerpo) o1).getCantEntidades() == 1) {
+							ultimoNPC(((NPC) o2).getSala(), true);
+						}
+					}
+				}catch (Exception e) {
+				}
 			}
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
@@ -211,7 +236,7 @@ public class PantallaRonda1 extends PantallaRonda{
 				b2dr.render(mundo, camera.combined);
 				stage.act();
 				stage.draw();
-
+				
 				Render.batch.setProjectionMatrix(camera.combined);
 				Gdx.input.setInputProcessor(stage);
 			}else{
@@ -340,13 +365,8 @@ public class PantallaRonda1 extends PantallaRonda{
 				i--;
 				posXLadron = posX;
 				posYLadron = posY;
-			}
-			
-			else npcs[i].setPosicion(posX,posY);
-			
-			if (ladronCreado&&jugadorLadron.getPosition().equals(new Vector2(0,0))){
-				jugadorLadron.setPosition(200*Utiles.PPM, 160*Utiles.PPM);
-				System.out.println("setposition del ladron x:");
+			}else {
+				npcs[i].setPosicion(posX,posY);
 			}
 		}
 	}
@@ -361,5 +381,15 @@ public class PantallaRonda1 extends PantallaRonda{
 		jugadorLadron.setPosition(mapa.getVectorZonas()[sala].getPosition().x, 
 								  mapa.getVectorZonas()[sala].getPosition().y);
 		jugadorLadron.setSala(sala);
+	}
+	public void ultimoNPC(int sala, boolean ultimo) {
+		for (int i = 0; i < npcs.length; i++) {
+			if(npcs[i].getSala() == sala) {
+				if(ultimo) {
+					npcs[i].setDerecha( ( npcs[i].getPosition().x > mapa.getVectorZonas()[sala].getPosition().x)? false: true);
+				}
+				npcs[i].setUltimoNPC(ultimo);
+			}
+		}
 	}
 }

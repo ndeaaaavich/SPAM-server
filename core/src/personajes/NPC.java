@@ -12,19 +12,15 @@ import cuerpos.Cuerpo;
 import eventos.InterfaceRobable;
 
 public class NPC extends Entidad implements InterfaceRobable{
-	private int random = 0; // 1 arriba 2 abajo 3 izquierda 4 derecha 5-40 nada
-	private int randomDirec;
-	private boolean finRecorrido, detectado, CambioDirec, robado = false, salaRobada = false;
-	private float tiempo=0, tiempoMov=0, tiempoDetectado; 
-	private float posX , posY;
-	private int movimientoElegido;
-	private boolean mover;
-	
+	private int random = 0, // 1 arriba 2 abajo 3 izquierda 4 derecha 5-40 nada
+				randomDirec, movimientoElegido, identificador;
+	private boolean finRecorrido, detectado, CambioDirec, 
+					robado = false, salaRobada = false, 
+					mover, ultimoNPC;
+	private float tiempo=0, tiempoMov=0, tiempoDetectado, posX , posY; 
 	private int[] apariencia = new int[3]; 
 	//0 pelo 
 	//1 torso
-	
-	private int identificador;
 	
 	public NPC(Cuerpo cuerpo, String sprite, int[] apariencia, int identificador) {
 		super(cuerpo, sprite);
@@ -66,11 +62,14 @@ public class NPC extends Entidad implements InterfaceRobable{
 				setRobado(salaRobada);
 			}
 		}
-
-		random = Utiles.r.nextInt(700)+1;
-		//si este random se sacaba todo el tiempo siempre salía un numero distinto
-		//asi que lo guarde en una variable distitna que se llama movimientoElegido
-		//hola
+		
+		if(ultimoNPC) {
+			random = 5;
+		}else {
+			random = Utiles.r.nextInt(700)+1;
+			//si este random se sacaba todo el tiempo siempre salía un numero distinto
+			//asi que lo guarde en una variable distitna que se llama movimientoElegido	
+		}
 		if((random < 5) && (tiempo==0.0f)) {
 			randomDirec = Utiles.r.nextInt(2);
 			movimientoElegido = random;
@@ -102,14 +101,14 @@ public class NPC extends Entidad implements InterfaceRobable{
 		
 		animacionMovimiento();
 		if(!Global.terminaJuego) {
-		if(Global.empiezaJuego) {
+			if(Global.empiezaJuego) {
 				if(finRecorrido) {
 					this.enviarFuerzas(-1,-1);
 				}else {
 					this.enviarFuerzas(1,1);
 				}
 			}
-			if (mover) {
+			if(mover) {
 				//se le resta la mitad del ancho y la del alto para alinear el centro de los body a la de las texturas
 				posX=cuerpo.getPosition().x-(cuerpo.getAncho()/2);
 				posY=cuerpo.getPosition().y-(cuerpo.getAlto()/2);
@@ -159,13 +158,16 @@ public class NPC extends Entidad implements InterfaceRobable{
 	public int[] getApariencia() {
 		return apariencia;
 	}
+	public boolean isUltimoNPC() {
+		return ultimoNPC;
+	}
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------SETTERS------------------------------------------------------------------
 	// --------------------------------------------------------------------------------------------------------------------------------------
 	public void setRobado(boolean robado) {
 		this.robado = robado;
 		Utiles.hs.enviarMensajeATodos("npcs%salaRobada%" + identificador);
-	}//hola
+	}
 	public void setPosicion(float x, float y) {
     	this.cuerpo.setPosition(x,y);
 	}
@@ -177,6 +179,15 @@ public class NPC extends Entidad implements InterfaceRobable{
 	public void setSala(int sala) {
 		this.sala = sala;
 		Utiles.hs.enviarMensajeATodos("npcs%sala%" + identificador + "%" + this.sala);
+	}
+	public void setUltimoNPC(boolean ultimoNPC) {
+		this.ultimoNPC = ultimoNPC;
+	}
+	public void setDerecha(boolean derecha) {
+		this.derecha = derecha;
+		if(ultimoNPC) {
+			Utiles.hs.enviarMensajeATodos("npcs%derecha%" + identificador + "%" + derecha);
+		}
 	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
 		
@@ -193,4 +204,5 @@ public class NPC extends Entidad implements InterfaceRobable{
 		
 		this.cuerpo.setLinearVelocity(fuerzaX,fuerzaY);
 	}
+	
 }

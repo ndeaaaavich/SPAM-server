@@ -15,8 +15,8 @@ public class Cuerpo{
 	private float ancho, alto;
 	private Body bodyReferencia = null;
 	private Fixture fixture;
-	private int numeroArea= -1; //si numeroZona = -1 el cuerpo no es una zona
-								//si numeroZona != -1 el cuerpo es una zona
+	private int numeroArea= -1, cantEntidades; //si numeroZona = -1 el cuerpo no es una zona
+											   //si numeroZona != -1 el cuerpo es una zona
 	private boolean robado;
 	
 	private BodyDef def;
@@ -41,7 +41,7 @@ public class Cuerpo{
 		
 		forma.dispose();
 	}
-	public Cuerpo(World mundo,
+	/*public Cuerpo(World mundo,
 			  	  float ancho, float alto, BodyType bodyType,
 			  	  float positionX, float positionY,
 			  	  boolean escenario) {
@@ -64,7 +64,7 @@ public class Cuerpo{
 		setUserData(this);
 	}
 	forma.dispose();
-}
+	}*/
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------SETTERS------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------
@@ -87,6 +87,12 @@ public class Cuerpo{
 	}
 	public void applyLinearImpulse(float vX,float vY) {
 		bodyReferencia.applyLinearImpulse(new Vector2(vX, vY), bodyReferencia.getWorldCenter(), true);
+	}
+	public void sumCantEntidades() {
+		this.cantEntidades ++;
+	}
+	public void restCantEntidades() {
+		this.cantEntidades --;
 	}
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	//-------------------------------------------------------------GETTERS------------------------------------------------------------------
@@ -114,5 +120,8 @@ public class Cuerpo{
 	}
 	public Object getUserData() {
 		return bodyReferencia.getUserData();
+	}
+	public int getCantEntidades(){
+		return cantEntidades;
 	}
 }
