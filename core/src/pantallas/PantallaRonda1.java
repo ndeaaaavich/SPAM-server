@@ -356,5 +356,10 @@ public class PantallaRonda1 extends PantallaRonda{
 								   SpriteInfo.values()[indiceLadron].getFilename(),
 								   SpriteInfo.values()[indiceLadron].getApariencia());
 		stage.addActor(jugadorLadron);
+		int sala = Utiles.r.nextInt(mapa.getVectorZonas().length);
+		
+		jugadorLadron.setPosition(mapa.getVectorZonas()[sala].getPosition().x, 
+								  mapa.getVectorZonas()[sala].getPosition().y);
+		jugadorLadron.setSala(sala);
 	}
 }

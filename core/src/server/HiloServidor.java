@@ -105,6 +105,7 @@ public class HiloServidor extends Thread {
 		if (nroCliente != -1) {
 			
 			if (msg.equals("desconectarCliente") ) {
+				Global.terminaJuego = true;
 				cantClientes --;
 				clientes[nroCliente] = null;
 			}
@@ -187,7 +188,7 @@ public class HiloServidor extends Thread {
 					Global.puntajeLadron++;
 					Global.ronda++;
 					if (Global.ronda > Global.cantRondas) {
-
+						enviarMensajeATodos("TerminaJuego");
 					} else {
 						Global.terminaRonda = true;
 						enviarMensajeATodos("ladron%gano%" + Global.ronda);
@@ -196,7 +197,7 @@ public class HiloServidor extends Thread {
 					Global.puntajeGuardia++;
 					Global.ronda++;
 					if (Global.ronda > Global.cantRondas) {
-
+						enviarMensajeATodos("TerminaJuego");
 					} else {
 						Global.terminaRonda = true;
 						enviarMensajeATodos("ladron%perdio%" + Global.ronda);
@@ -214,7 +215,7 @@ public class HiloServidor extends Thread {
 					Global.puntajeGuardia++;
 					Global.ronda++;
 					if (Global.ronda > Global.cantRondas) {
-
+						enviarMensajeATodos("TerminaJuego");
 					} else {
 						Global.terminaRonda = true;
 						enviarMensajeATodos("guardia%gano%" + Global.ronda);
@@ -223,7 +224,7 @@ public class HiloServidor extends Thread {
 					Global.puntajeLadron++;
 					Global.ronda++;
 					if (Global.ronda > Global.cantRondas) {
-
+						enviarMensajeATodos("TerminaJuego");
 					} else {
 						Global.terminaRonda = true;
 						enviarMensajeATodos("guardia%perdio%" + Global.ronda);
