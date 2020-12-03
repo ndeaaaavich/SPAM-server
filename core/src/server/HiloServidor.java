@@ -141,7 +141,7 @@ public class HiloServidor extends Thread {
 				boolean keyDown = Boolean.parseBoolean(mensajeParametrizado[2]);
 
 				if (nroCliente == 0) {
-					app.jugadorGuardia.setEstadoPrevio(app.jugadorLadron.getEstado());
+					app.jugadorGuardia.setEstadoPrevio(app.jugadorGuardia.getEstado());
 					movimientoGuardia(mensajeParametrizado, keyDown);
 					// if (Global.ronda == 1) {
 					app.jugadorGuardia.setDireccion(new Vector2(fuerzaX, fuerzaY));
