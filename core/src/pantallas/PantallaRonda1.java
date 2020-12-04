@@ -385,9 +385,6 @@ public class PantallaRonda1 extends PantallaRonda{
 	public void ultimoNPC(int sala, boolean ultimo) {
 		for (int i = 0; i < npcs.length; i++) {
 			if(npcs[i].getSala() == sala) {
-				if(ultimo) {
-					npcs[i].setDerecha( ( npcs[i].getPosition().x > mapa.getVectorZonas()[sala].getPosition().x)? false: true);
-				}
 				npcs[i].setUltimoNPC(ultimo);
 			}
 		}

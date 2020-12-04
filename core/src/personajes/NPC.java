@@ -182,12 +182,10 @@ public class NPC extends Entidad implements InterfaceRobable{
 	}
 	public void setUltimoNPC(boolean ultimoNPC) {
 		this.ultimoNPC = ultimoNPC;
+		Utiles.hs.enviarMensajeATodos("npcs%solo%" + identificador + "%" + ultimoNPC);
 	}
 	public void setDerecha(boolean derecha) {
 		this.derecha = derecha;
-		if(ultimoNPC) {
-			Utiles.hs.enviarMensajeATodos("npcs%derecha%" + identificador + "%" + derecha);
-		}
 	}
 	public void enviarFuerzas(int fuerzaNuevaX, int fuerzaNuevaY) {
 		
