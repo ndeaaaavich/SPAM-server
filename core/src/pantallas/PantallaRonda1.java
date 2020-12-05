@@ -41,7 +41,6 @@ public class PantallaRonda1 extends PantallaRonda{
 		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, mapa.getVectorZonas()[0].getPosition().x / Utiles.PPM, mapa.getVectorZonas()[0].getPosition().y/ Utiles.PPM), "personajes/badlogic.jpg");
 		stage.addActor(jugadorGuardia);
 		//hilo server
-		System.out.println(Global.ronda );
 		if(Global.ronda == 1) {
 			Utiles.hs = new HiloServidor(this);
 			Utiles.hs.start();
