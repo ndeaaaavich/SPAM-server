@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -36,8 +37,10 @@ public class Cuerpo{
 		
 		PolygonShape forma = new PolygonShape();
 		forma.setAsBox((ancho * Utiles.PPM)/2, (alto * Utiles.PPM)/2);
-		
+	    
 		fixture = bodyReferencia.createFixture(forma, 1f);
+		fixture.setFriction(0f);
+		
 		
 		forma.dispose();
 	}
@@ -106,6 +109,7 @@ public class Cuerpo{
 	public float getAlto() {
 		return alto;
 	}
+	
 	public Body getBodyReferencia() {
 		return bodyReferencia;
 	}
@@ -123,5 +127,9 @@ public class Cuerpo{
 	}
 	public int getCantEntidades(){
 		return cantEntidades;
+	}
+
+	public BodyDef getBodyDefinition() {
+		return def;
 	}
 }
