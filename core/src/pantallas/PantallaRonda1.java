@@ -19,7 +19,6 @@ public class PantallaRonda1 extends PantallaRonda{
 
 	public NPC[] npcs = new NPC[8];
 
-	private float posX = 0, posY = 0;
 	private Vector2 posicion = new Vector2(0,0);
 	private Vector2 puntoLlegada;
 	private Vector2 puntoSalida;
@@ -38,8 +37,12 @@ public class PantallaRonda1 extends PantallaRonda{
 	
 	@Override
 	public void show() {
-		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody, mapa.getVectorZonas()[0].getPosition().x / Utiles.PPM, mapa.getVectorZonas()[0].getPosition().y/ Utiles.PPM), "personajes/badlogic.jpg");
+		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody,0,0),"personajes/badlogic.jpg");
 		stage.addActor(jugadorGuardia);
+		int sala = Utiles.r.nextInt(mapa.getVectorZonas().length);
+		jugadorGuardia.setPosition(mapa.getVectorZonas()[sala].getPosition().x, 
+								   mapa.getVectorZonas()[sala].getPosition().y);
+		jugadorGuardia.setSala(sala);
 		//hilo server
 		if(Global.ronda == 1) {
 			Utiles.hs = new HiloServidor(this);
