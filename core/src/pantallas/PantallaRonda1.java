@@ -17,7 +17,7 @@ import personajes.*;
 
 public class PantallaRonda1 extends PantallaRonda{
 
-	public NPC[] npcs = new NPC[8];
+	public NPC[] npcs = new NPC[17];
 
 	private Vector2 posicion = new Vector2(0,0);
 	private Vector2 puntoLlegada;
@@ -294,6 +294,9 @@ public class PantallaRonda1 extends PantallaRonda{
 	//-------------------------------------------------------------NPC COSAS----------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------
 	public void crearNPCs(int minporsala, int maxporsala) {
+		
+		System.out.println("hola");
+		
 		int i;
 		int porsala[] = new int[mapa.getVectorZonas().length];
 		int total = 0;
@@ -370,6 +373,7 @@ public class PantallaRonda1 extends PantallaRonda{
 			}else {
 				npcs[i].setPosicion(posX,posY);
 			}
+			
 		}
 	}
 	public void crearLadron(int indiceLadron) {
