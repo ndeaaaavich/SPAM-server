@@ -39,10 +39,9 @@ public class PantallaRonda1 extends PantallaRonda{
 	public void show() {
 		jugadorGuardia = new Guardia(new Cuerpo(mundo, 16, 15, BodyType.DynamicBody,0,0),"personajes/badlogic.jpg");
 		stage.addActor(jugadorGuardia);
-		int sala = Utiles.r.nextInt(mapa.getVectorZonas().length);
-		jugadorGuardia.setPosition(mapa.getVectorZonas()[sala].getPosition().x, 
-								   mapa.getVectorZonas()[sala].getPosition().y);
-		jugadorGuardia.setSala(sala);
+		jugadorGuardia.setSala(4);
+		jugadorGuardia.setPosition(mapa.getVectorZonas()[4].getPosition().x, 
+								   mapa.getVectorZonas()[4].getPosition().y);
 		//hilo server
 		if(Global.ronda == 1) {
 			Utiles.hs = new HiloServidor(this);
@@ -388,10 +387,10 @@ public class PantallaRonda1 extends PantallaRonda{
 								   SpriteInfo.values()[indiceLadron].getApariencia());
 		stage.addActor(jugadorLadron);
 		int sala = Utiles.r.nextInt(mapa.getVectorZonas().length);
-		
+		jugadorLadron.setSala(sala);
 		jugadorLadron.setPosition(mapa.getVectorZonas()[sala].getPosition().x, 
 								  mapa.getVectorZonas()[sala].getPosition().y);
-		jugadorLadron.setSala(sala);
+		
 	}
 	public void ultimoNPC(int sala, boolean ultimo) {
 		for (int i = 0; i < npcs.length; i++) {
