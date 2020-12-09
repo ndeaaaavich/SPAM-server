@@ -53,7 +53,7 @@ public class HiloServidor extends Thread {
 	public HiloServidor(PantallaRonda app) {
 		this.app = app;
 		try {
-			conexion = new DatagramSocket(42069);
+			conexion = new DatagramSocket(42000);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
@@ -129,6 +129,7 @@ public class HiloServidor extends Thread {
 							+ npcs[i].getPosition().x / Utiles.PPM + "%" + npcs[i].getPosition().y / Utiles.PPM + "%"
 							+ npcs[i].getApariencia()[0] + "%" + npcs[i].getApariencia()[1] + "%"
 							+ npcs[i].getApariencia()[2] + "%" + npcs[i].getSala());
+					System.out.println("Mensaje enviado");
 					System.out.print(i + " ");
 				}
 				System.out.println("Creando el ladron:");

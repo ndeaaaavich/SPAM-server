@@ -350,6 +350,8 @@ public class PantallaRonda1 extends PantallaRonda{
 				
 				//if(npcs.length == npcs.length-2) salaEncontrada = true;
 			}while(!salaEncontrada);
+			
+			System.out.println("sala seteada: " + salaRandom);
 			// ----------------------------posicionar npc---------------------------- //
 			int margen = 60;
 
@@ -370,8 +372,11 @@ public class PantallaRonda1 extends PantallaRonda{
 				i--;
 				posXLadron = posX;
 				posYLadron = posY;
+				System.out.println("setPosition ladron:" + posX + "," + posY);
 			}else {
 				npcs[i].setPosicion(posX,posY);
+				
+				System.out.println("setPosition npc:" + posX + "," + posY);
 			}
 			
 		}
